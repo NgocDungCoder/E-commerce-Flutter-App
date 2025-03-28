@@ -175,14 +175,14 @@ class ProductService extends GetxService {
 
       Get.snackbar("Thành công", "Sản phẩm đã được thêm vào giỏ hàng!",
           duration: Duration(seconds: 1),
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.green,
           colorText: Colors.white);
     } catch (e) {
       print("Lỗi khi thêm vào giỏ hàng: $e");
       Get.snackbar("Lỗi", "Không thể thêm sản phẩm vào giỏ hàng!",
           duration: Duration(seconds: 1),
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white);
     }

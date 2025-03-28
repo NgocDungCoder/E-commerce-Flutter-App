@@ -13,9 +13,7 @@ class BlogLogic extends GetxController {
   @override
   void onInit() async{
     super.onInit();
-    await fetchBlogs();
-    print(state.blogs.runtimeType);
-    print(state.blogs);
+    await refreshBlogs();
     await fetchCategories();
     scrollController.addListener(_onScroll);
   }
@@ -29,19 +27,43 @@ class BlogLogic extends GetxController {
   Future<void> fetchCategories() async {
     List categories = await _blogService.getCategories();
     state.categories.addAll(categories);
-
   }
 
   void toggleListView() {
     state.isListView.value = !state.isListView.value;
   }
 
-  Future<void> fetchBlogs({bool isLoadMore = false}) async {
-    try {
+  Future<void> refreshBlogs() async {
+    try{
       if(state.isLoading.value == true) return;
-
       state.isLoading.value = true;
+      List<Map<String, dynamic>> newBlogs = await fetchBlogs();
+      state.blogs.clear();
+      state.blogs.addAll(newBlogs);
+    } catch(e) {
+      print("[LOG] Lỗi khi refesh Blogs: $e");
 
+    } finally {
+      state.isLoading.value = false;
+    }
+  }
+
+  Future<void> loadMore() async {
+    try{
+      if(state.isLoadmore.value == true) return;
+      state.isLoadmore.value = true;
+      List<Map<String, dynamic>> newBlogs = await fetchBlogs();
+      state.blogs.addAll(newBlogs);
+    } catch(e) {
+      print("[LOG] Lỗi khi refesh Blogs: $e");
+
+    } finally {
+      state.isLoadmore.value = false;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> fetchBlogs({bool isLoadMore = false}) async {
+    try {
       Map<String, dynamic> result = await _blogService.fetchBlogs(lastDocument: state.lastDocument);
 
       List<Map<String, dynamic>> newBlogs = result["blogs"];
@@ -69,12 +91,14 @@ class BlogLogic extends GetxController {
             print("⚠️ Lỗi khi xử lý ảnh: $e");
           }
         }));
-        state.blogs.addAll(newBlogs);
+        return newBlogs;
       }
     } on Exception catch (e) {
       print("Lỗi khi lấy dứ liệu blogs: $e");
     } finally {
       state.isLoading.value = false;
     }
+    return [];
+
   }
 }

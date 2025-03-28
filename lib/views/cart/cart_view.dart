@@ -236,13 +236,18 @@ class CartView extends StatelessWidget {
                                                                             .black12)),
                                                                 child:
                                                                     IconButton(
-                                                                        onPressed: () =>
+                                                                        onPressed:
+                                                                            () =>
                                                                                 {
                                                                                   logic.updateQuantityItem(product['cardID'], product['quantity'] - 1),
                                                                                 },
-                                                                        icon: Icon(Icons.remove),
-                                                                        padding: EdgeInsets.zero,
-                                                                        constraints: BoxConstraints()),
+                                                                        icon: Icon(Icons
+                                                                            .remove),
+                                                                        padding:
+                                                                            EdgeInsets
+                                                                                .zero,
+                                                                        constraints:
+                                                                            BoxConstraints()),
                                                               ),
                                                               SizedBox(
                                                                 width: 10,
@@ -390,7 +395,9 @@ class CartView extends StatelessWidget {
                                       borderRadius: BorderRadius.zero,
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.toNamed(Routes.checkout.p);
+                                  },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 class CartLogic extends GetxController {
   final ProductService _productService = ProductService();
+
   final CartState state = CartState();
   final GetStorage storage = GetStorage();
   String userId = 'zYhe1dcYsDcr4qGcwKWg';
@@ -124,6 +125,11 @@ class CartLogic extends GetxController {
     await fetchCardOfUser('zYhe1dcYsDcr4qGcwKWg');
   }
 
+  Future<void> plusCart(int quantity) async {
+    state.itemCount.value += quantity;
+  }
+
+
   void showDeleteDialog(String cartId) {
     Get.dialog(
       Dialog(
@@ -169,12 +175,13 @@ class CartLogic extends GetxController {
                     onPressed: () async {
                       await _productService.deleteProductFromCart(
                           cartId, userId);
-                      refreshCart();
+                      plusCart(-1);
+                      await refreshCart();
                       Future.delayed(Duration(milliseconds: 200), () {
                         Get.snackbar(
                           "Thành công",
                           "Sản phẩm đã được xóa khỏi giỏ hàng!",
-                          snackPosition: SnackPosition.BOTTOM,
+                          snackPosition: SnackPosition.TOP,
                           backgroundColor: Colors.green,
                           colorText: Colors.white,
                           duration: Duration(seconds: 1),

@@ -3,49 +3,51 @@ import 'package:get/get.dart';
 
 import '../../routes/route.dart';
 import '../../views/cart/cart_logic.dart';
+import '../custon_drawer/custom_drawer.dart';
 
-class PrimaryScaffold extends StatelessWidget {
+class PrimaryScaffold extends StatefulWidget {
   final Widget? body;
   final Widget? title;
-  // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
 
   PrimaryScaffold({super.key, this.body, this.title});
 
   @override
+  State<PrimaryScaffold> createState() => _PrimaryScaffoldState();
+}
+
+class _PrimaryScaffoldState extends State<PrimaryScaffold> {
+  final menuKey = GlobalKey();
+
+  @override
   Widget build(BuildContext context) {
     final cartController = Get.find<CartLogic>();
+    print("📌 menuKey: $menuKey");
+    print("📌 cartController.state: ${cartController.state}");
+    print(
+        "📌 cartController.state.itemCount: ${cartController.state.itemCount}");
     return Scaffold(
-      // key: scaffoldKey,
-      // drawer:  FractionallySizedBox(
-      //   widthFactor: 0.6, // 60% chiều rộng màn hình
-      //   child: Drawer(
-      //     child: ListView(
-      //       children: [
-      //         DrawerHeader(child: Text("Menu")),
-      //         ListTile(title: Text("Trang chủ"), onTap: () {}),
-      //       ],
-      //     ),
-      //   ),
-      // ),
+      key: menuKey,
       appBar: AppBar(
         leading: Builder(
           builder: (context) {
             return Navigator.of(context).canPop()
                 ? IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Get.back(),
-            )
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () => Get.back(),
+                  )
                 : IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                // Scaffold.of(context).openDrawer(); // Dùng context đúng của Scaffold
-              },
-            );
+                    icon: Icon(Icons.menu),
+                    onPressed: () {
+                      if (menuKey.currentContext == null) {
+                        print("⚠️ Menu Key chưa sẵn sàng!");
+                        return;
+                      }
+                      showCustomDrawer(context, menuKey);
+                    },
+                  );
           },
         ),
-        title: title ?? Text('E-commerce'),
-
+        title: widget.title ?? Text('E-commerce'),
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 25),
         centerTitle: true,
         backgroundColor: Colors.black,
@@ -73,6 +75,7 @@ class PrimaryScaffold extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
+                    cartController.refreshCart();
                     Get.toNamed(Routes.cart.sp);
                   },
                   icon: Icon(Icons.shopping_cart_outlined),
@@ -108,7 +111,7 @@ class PrimaryScaffold extends StatelessWidget {
           ),
         ],
       ),
-      body: body,
+      body: widget.body,
     );
   }
 }

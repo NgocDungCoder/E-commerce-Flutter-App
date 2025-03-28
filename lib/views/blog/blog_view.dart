@@ -315,7 +315,12 @@ class BlogsView extends StatelessWidget {
                       alignment: Alignment.center,
                       child: SizedBox(
                         width: 250,
-                        child: ElevatedButton(
+                        child: logic.state.isLoadmore.value ?
+                        Center(
+                          child: Lottie.asset('assets/animations/load_more.json',
+                              width: 150, height: 150),
+                        ) :
+                        ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               padding: EdgeInsets.symmetric(
@@ -325,7 +330,7 @@ class BlogsView extends StatelessWidget {
                                 side: BorderSide(color: Colors.grey, width: 1),
                               ),
                             ),
-                            onPressed: logic.fetchBlogs,
+                            onPressed: logic.loadMore,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

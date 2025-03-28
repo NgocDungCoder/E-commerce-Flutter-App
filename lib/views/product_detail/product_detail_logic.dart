@@ -9,7 +9,7 @@ import 'product_detail_state.dart';
 class ProductDetailLogic extends GetxController {
   final ProductDetailState state = ProductDetailState();
   final ProductService _productService = ProductService();
-  final CartLogic _cartLogic = CartLogic();
+  final CartLogic _cartLogic = Get.find<CartLogic>();
 
   @override
   void onInit() async {
@@ -125,8 +125,7 @@ class ProductDetailLogic extends GetxController {
 
   void addToCart(String userId, String productId, int quantity) async{
     await _productService.addToCart(userId, productId, quantity);
-    _cartLogic.state.isLoading.value = true;
-    _cartLogic.refreshCart();
+    _cartLogic.plusCart(quantity);
   }
 
   void getListProductFromStorage() {

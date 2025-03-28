@@ -1,6 +1,8 @@
 import 'package:ecomercy_app_flutter/views/blog/blog_binding.dart';
 import 'package:ecomercy_app_flutter/views/blog/blog_view.dart';
 import 'package:ecomercy_app_flutter/views/cart/cart_view.dart';
+import 'package:ecomercy_app_flutter/views/checkout/checkout_binding.dart';
+import 'package:ecomercy_app_flutter/views/checkout/checkout_view.dart';
 import 'package:ecomercy_app_flutter/views/login/login_screen.dart';
 import 'package:ecomercy_app_flutter/views/product_detail/product_detail_binding.dart';
 import 'package:ecomercy_app_flutter/views/product_detail/product_detail_screen.dart';
@@ -54,6 +56,7 @@ abstract class Routes {
   static const products = RoutePath('/products');
   static const product_detail = RoutePath('/productDetail');
   static const cart = RoutePath('/cart');
+  static const checkout = RoutePath('/checkout');
 }
 
 final List<GetPage> getPages = [
@@ -88,5 +91,10 @@ final List<GetPage> getPages = [
   GetPage(
     name: Routes.cart.p,
     page: () => CartView(),
-  )
+  ),
+  GetPage(
+    name: Routes.checkout.sp,
+    page: () => CheckoutView(),
+    binding: CheckoutBinding(),
+  ),
 ].toList();

@@ -8,7 +8,6 @@ class ProductState {
   int itemsPerPage = 10; // Số sản phẩm trên mỗi trang
   RxInt totalProducts = 0.obs;
   int get totalPages => (totalProducts / itemsPerPage).ceil();
-
-
+  var isListView = true.obs;
 }
 

@@ -5,12 +5,14 @@ import 'package:ecomercy_app_flutter/views/products/product_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/scroll_controller.dart';
 import '../../services/product_service.dart';
 
 class ProductLogic extends GetxController {
   final ProductService productService = ProductService();
   final ProductState state = ProductState();
-  ScrollController scrollController = ScrollController();
+  final scrollX = Get.put(ScrollControllerX()); // Khởi tạo controller
+
 
   @override
   void onInit() async {
@@ -22,11 +24,11 @@ class ProductLogic extends GetxController {
   void onPageSelected(int pageNumber) {
     state.currentPage.value = pageNumber;
     fetchProducts(pageNumber);
-    scrollController.animateTo(
-      0.0,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
+    // scrollController.animateTo(
+    //   0.0,
+    //   duration: Duration(milliseconds: 300),
+    //   curve: Curves.easeOut,
+    // );
   }
   Future<void> fetchTotalProducts() async {
     var snapshot = await FirebaseFirestore.instance.collection('products').get();
@@ -102,5 +104,8 @@ class ProductLogic extends GetxController {
 
   void addProducts() async {
     ProductService().addProducts();
+  }
+  void toggleListView(){
+    state.isListView.value = !state.isListView.value;
   }
 }

@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
 class LoginState {
-  RxString phone = ''.obs;
-  RxString password = ''.obs;
-  RxBool isObscure = true.obs;
-
+  var email = ''.obs;
+  var password = ''.obs;
+  var isObscure = true.obs;
+  var isValidEmail = true.obs;
 }

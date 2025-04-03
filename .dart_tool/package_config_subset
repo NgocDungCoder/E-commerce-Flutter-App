@@ -130,6 +130,10 @@ flutter_plugin_android_lifecycle
 3.5
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.26/
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.26/lib/
+font_awesome_flutter
+3.0
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/font_awesome_flutter-10.8.0/
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/font_awesome_flutter-10.8.0/lib/
 get
 2.15
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/get-4.7.2/
@@ -278,6 +282,10 @@ petitparser
 3.2
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/petitparser-6.0.2/
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/petitparser-6.0.2/lib/
+pinput
+2.15
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/pinput-3.0.1/
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/pinput-3.0.1/lib/
 platform
 3.2
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.6/
@@ -290,6 +298,10 @@ shimmer
 2.17
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/shimmer-3.0.0/
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/shimmer-3.0.0/lib/
+smart_auth
+2.16
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/smart_auth-1.1.1/
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/smart_auth-1.1.1/lib/
 source_span
 2.18
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.0/
@@ -318,6 +330,10 @@ typed_data
 3.5
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.4.0/
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.4.0/lib/
+universal_platform
+2.12
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/universal_platform-1.1.0/
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/universal_platform-1.1.0/lib/
 vector_math
 2.14
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4/

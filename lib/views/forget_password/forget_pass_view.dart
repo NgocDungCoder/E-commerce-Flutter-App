@@ -1,0 +1,194 @@
+import 'package:ecomercy_app_flutter/routes/route.dart';
+import 'package:ecomercy_app_flutter/views/forget_password/forget_pass_logic.dart';
+import 'package:ecomercy_app_flutter/widgets/Text/primary_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import '../../controllers/auth_controller.dart';
+
+class ForgetPassBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.put<ForgetPassLogic>(ForgetPassLogic());
+  }
+}
+
+class ForgotPasswordView extends GetView<ForgetPassLogic> {
+  final TextEditingController emailController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus
+              ?.unfocus(); // Ẩn bàn phím khi nhấn ra ngoài
+        },
+        child: Stack(
+          children: [
+        // Nền trắng
+        Positioned.fill(
+        child: Container(
+        color: Colors.black,
+        ),
+      ),
+      Positioned(
+        top: -150, // Dịch xuống để tạo hiệu ứng
+        left: -300,
+        right: 0,
+        child: Container(
+          height: 400,
+          width: 400,
+          decoration: BoxDecoration(
+            color: Colors.yellow.shade600,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
+      // Nền hồng cong phía dưới
+      Positioned(
+        bottom: -300, // Dịch xuống để tạo hiệu ứng
+        left: 0,
+        right: -250,
+        child: Container(
+          height: 500,
+          width: 500,
+          decoration: BoxDecoration(
+            color: Colors.yellow.shade600,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
+      // Nội dung chính
+      Positioned(
+        bottom: -175, // Dịch xuống để tạo hiệu ứng
+        left: -150,
+        right: 0,
+        child: Container(
+          height: 300,
+          width: 300,
+          decoration: BoxDecoration(
+            color: Colors.yellow.shade400,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
+      // Nội dung chính
+      Positioned.fill(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            Text(
+            "Nhập email lấy lại mật khẩu",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 30),
+          TextField(
+            maxLength: 50,
+            controller: emailController,
+            onChanged: (value) {
+              // state.email.value = value;
+              // controller.validateEmail(value);
+            },
+            decoration: InputDecoration(
+              labelText: 'Email',
+              labelStyle: TextStyle(color: Colors.white),
+              prefixIcon: Icon(Icons.mail_outline),
+              prefixIconColor: Colors.white,
+              border: InputBorder.none,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide:
+                BorderSide(color: Colors.yellow, width: 1),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(
+                    color: Colors.yellow.shade600, width: 3),
+              ),
+              counterStyle: TextStyle(color: Colors.white),
+            ),
+            style: TextStyle(color: Colors.white),
+            cursorColor: Colors.white,
+            keyboardType: TextInputType.emailAddress,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(
+                  RegExp(r'[a-zA-Z0-9@._-]')),
+              // Chỉ cho phép email hợp lệ
+            ],
+          ),
+          // Obx(() => controller.state.isValidEmail.value
+          //     ? SizedBox()
+          //     : Text("Email không hợp lệ", style: TextStyle(color: Colors.red))),
+
+          SizedBox(height: 30,),
+          ElevatedButton(
+            onPressed: () {
+              if (emailController.text.isNotEmpty) {
+                controller.resetPassword(emailController.text);
+              } else {
+                Get.snackbar("Lỗi", "Vui lòng nhập email hợp lệ");
+              }
+            },
+
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.yellow.shade700,
+              minimumSize: Size(300, 60),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+            child: Text("Gửi email đặt lại mật khẩu",
+                style: TextStyle(fontSize: 20, color: Colors.black)),
+          ),
+          SizedBox(height: 15,),
+          TextButton(onPressed: () => Get.offNamed(Routes.login.p),
+              child: PrimaryText("Quay lại", color: Colors.white,)),
+          ],
+        ),
+      ),
+    ),]
+    ,
+    )
+    ,
+    )
+    ,
+    // Padding(
+    //   padding: EdgeInsets.all(16.0),
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       Text("Nhập email để đặt lại mật khẩu"),
+    //       SizedBox(height: 10),
+    //       TextField(
+    //         controller: emailController,
+    //         keyboardType: TextInputType.emailAddress,
+    //         decoration: InputDecoration(
+    //           labelText: "Email",
+    //           border: OutlineInputBorder(),
+    //         ),
+    //       ),
+    //       SizedBox(height: 20),
+    //       ElevatedButton(
+    //         onPressed: () {
+    //           if (emailController.text.isNotEmpty) {
+    //             controller.resetPassword(emailController.text);
+    //           } else {
+    //             Get.snackbar("Lỗi", "Vui lòng nhập email hợp lệ");
+    //           }
+    //         },
+    //         child: Text("Gửi email đặt lại mật khẩu"),
+    //       ),
+    //     ],
+    //   ),
+    // ),
+    );
+  }
+}

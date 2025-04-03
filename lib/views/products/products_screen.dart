@@ -67,203 +67,7 @@ class ProductsScreen extends StatelessWidget {
                                 )),
                               )
                             : controller.state.isListView.value
-                                ? ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: controller.state.products.length,
-                                    itemBuilder: (context, index) {
-                                      var product =
-                                          controller.state.products[index];
-                                      return Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                height: 220,
-                                                width: 150,
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      colors: [
-                                                        Colors.blueAccent,
-                                                        Colors.red
-                                                      ],
-                                                      begin: Alignment.topLeft,
-                                                      end: Alignment
-                                                          .bottomRight),
-                                                  border: Border.all(
-                                                    width: 3,
-                                                    color: Colors.transparent,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  15),
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  10)),
-                                                ),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    Get.toNamed(Routes.product_detail.p,
-                                                        arguments: product['id']);
-                                                  },
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    15),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    10)),
-                                                    child: Image.network(
-                                                      product["image"],
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  height: 220,
-                                                  padding: EdgeInsets.all(10),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      PrimaryText(
-                                                        product["name"],
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 20,
-                                                        letterSpacing: 2,
-                                                      ),
-                                                      PrimaryText(
-                                                          'Mô tả sản phẩm'),
-                                                      PrimaryText(
-                                                        '${product['price'] ?? 'Giá bán'} đ',
-                                                        color: Colors.red,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      PrimaryText("⭐ 4.5"),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              PrimaryText(
-                                                                  "Size"),
-                                                              SizedBox(
-                                                                width: 7,
-                                                              ),
-                                                              Container(
-                                                                height: 30,
-                                                                width: 30,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  border: Border.all(
-                                                                      width: 1,
-                                                                      color: Colors
-                                                                          .grey),
-                                                                ),
-                                                                child: Center(
-                                                                    child:
-                                                                        PrimaryText(
-                                                                  "S",
-                                                                  fontSize: 15,
-                                                                )),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 7,
-                                                              ),
-                                                              Container(
-                                                                height: 30,
-                                                                width: 30,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  border: Border.all(
-                                                                      width: 1,
-                                                                      color: Colors
-                                                                          .grey),
-                                                                ),
-                                                                child: Center(
-                                                                    child:
-                                                                        PrimaryText(
-                                                                  "M",
-                                                                  fontSize: 15,
-                                                                )),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 7,
-                                                              ),
-                                                              Container(
-                                                                height: 30,
-                                                                width: 30,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  border: Border.all(
-                                                                      width: 1,
-                                                                      color: Colors
-                                                                          .grey),
-                                                                ),
-                                                                child: Center(
-                                                                    child:
-                                                                        PrimaryText(
-                                                                  "L",
-                                                                  fontSize: 15,
-                                                                )),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          Icon(
-                                                            Icons
-                                                                .favorite_border_outlined,
-                                                            color: Colors.red,
-                                                            size: 30,
-                                                          )
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                        ],
-                                      );
-                                    })
-                                : GridView.builder(
+                                ? GridView.builder(
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
@@ -427,7 +231,257 @@ class ProductsScreen extends StatelessWidget {
                                         ),
                                       );
                                     },
-                                  ),
+                                  )
+                                : ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: controller.state.products.length,
+                                    itemBuilder: (context, index) {
+                                      var product =
+                                          controller.state.products[index];
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  Container(
+                                                    height: 220,
+                                                    width: 150,
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                          colors: [
+                                                            Colors.blueAccent,
+                                                            Colors.red
+                                                          ],
+                                                          begin:
+                                                              Alignment.topLeft,
+                                                          end: Alignment
+                                                              .bottomRight),
+                                                      border: Border.all(
+                                                        width: 3,
+                                                        color:
+                                                            Colors.transparent,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topRight: Radius
+                                                                  .circular(15),
+                                                              bottomLeft: Radius
+                                                                  .circular(
+                                                                      10)),
+                                                    ),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        Get.toNamed(
+                                                            Routes
+                                                                .product_detail
+                                                                .p,
+                                                            arguments:
+                                                                product['id']);
+                                                      },
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        15),
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        10)),
+                                                        child: Image.network(
+                                                          product["image"],
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  if (product['isDiscount'])
+                                                    Positioned(
+                                                      top: 0,
+                                                      right: 0,
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 4),
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          color: ThemeConfigs
+                                                              .redText,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    15),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                          ),
+                                                        ),
+                                                        child: Row(
+                                                          children: [
+                                                            const Icon(
+                                                                Icons
+                                                                    .local_offer,
+                                                                color: ThemeConfigs
+                                                                    .whiteText,
+                                                                size: 14),
+                                                            const SizedBox(
+                                                                width: 3),
+                                                            Text(
+                                                              '${product['discount']} %',
+                                                              style: const TextStyle(
+                                                                  color: ThemeConfigs
+                                                                      .whiteText,
+                                                                  fontSize: 13),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                ],
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  height: 220,
+                                                  padding: EdgeInsets.all(10),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      PrimaryText(
+                                                        product["name"],
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 20,
+                                                        letterSpacing: 2,
+                                                      ),
+                                                      PrimaryText(
+                                                          'Mô tả sản phẩm'),
+                                                      PrimaryText(
+                                                        '${product['price'] ?? 'Giá bán'} đ',
+                                                        color: Colors.red,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      PrimaryText("⭐ 4.5"),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              PrimaryText(
+                                                                  "Size"),
+                                                              SizedBox(
+                                                                width: 7,
+                                                              ),
+                                                              Container(
+                                                                height: 30,
+                                                                width: 30,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  border: Border.all(
+                                                                      width: 1,
+                                                                      color: Colors
+                                                                          .grey),
+                                                                ),
+                                                                child: Center(
+                                                                    child:
+                                                                        PrimaryText(
+                                                                  "S",
+                                                                  fontSize: 15,
+                                                                )),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 7,
+                                                              ),
+                                                              Container(
+                                                                height: 30,
+                                                                width: 30,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  border: Border.all(
+                                                                      width: 1,
+                                                                      color: Colors
+                                                                          .grey),
+                                                                ),
+                                                                child: Center(
+                                                                    child:
+                                                                        PrimaryText(
+                                                                  "M",
+                                                                  fontSize: 15,
+                                                                )),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 7,
+                                                              ),
+                                                              Container(
+                                                                height: 30,
+                                                                width: 30,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  border: Border.all(
+                                                                      width: 1,
+                                                                      color: Colors
+                                                                          .grey),
+                                                                ),
+                                                                child: Center(
+                                                                    child:
+                                                                        PrimaryText(
+                                                                  "L",
+                                                                  fontSize: 15,
+                                                                )),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Icon(
+                                                            Icons
+                                                                .favorite_border_outlined,
+                                                            color: Colors.red,
+                                                            size: 30,
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      );
+                                    }),
                         const SizedBox(
                           height: 15,
                         ),

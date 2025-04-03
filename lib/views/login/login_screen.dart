@@ -1,10 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 
-
 // import '../../widgets/common/primary_scaffold.dart';
+import '../../routes/route.dart';
 import 'login_controller.dart';
 
 class LoginBinding extends Bindings {
@@ -103,11 +104,14 @@ class LoginScreen extends GetView<LoginController> {
                     SizedBox(height: 30),
                     TextField(
                       maxLength: 50,
-                      onChanged: (value) => state.phone.value = value,
+                      onChanged: (value) {
+                        state.email.value = value;
+                        controller.validateEmail(value);
+                      },
                       decoration: InputDecoration(
-                        labelText: 'Số điện thoại',
+                        labelText: 'Email',
                         labelStyle: TextStyle(color: Colors.white),
-                        prefixIcon: Icon(Icons.phone),
+                        prefixIcon: Icon(Icons.mail_outline),
                         prefixIconColor: Colors.white,
                         border: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
@@ -124,8 +128,17 @@ class LoginScreen extends GetView<LoginController> {
                       ),
                       style: TextStyle(color: Colors.white),
                       cursorColor: Colors.white,
-                      keyboardType: TextInputType.phone,
+                      keyboardType: TextInputType.emailAddress,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z0-9@._-]')),
+                        // Chỉ cho phép email hợp lệ
+                      ],
                     ),
+                    Obx(() => controller.state.isValidEmail.value
+                        ? SizedBox()
+                        : Text("Email không hợp lệ",
+                            style: TextStyle(color: Colors.red))),
                     SizedBox(height: 30),
                     Obx(
                       () => TextField(
@@ -169,7 +182,9 @@ class LoginScreen extends GetView<LoginController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.offNamed(Routes.register.p);
+                          },
                           child: Text(
                             'Chưa có tài khoản?',
                             style:
@@ -177,7 +192,9 @@ class LoginScreen extends GetView<LoginController> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.offNamed(Routes.forgotPassword.p);
+                          },
                           child: Text(
                             'Quên mật khẩu?',
                             style:
@@ -188,7 +205,7 @@ class LoginScreen extends GetView<LoginController> {
                     ),
                     SizedBox(height: 30),
                     ElevatedButton(
-                      onPressed: controller.login2,
+                      onPressed: controller.loginWithEmail,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.yellow.shade700,
                         minimumSize: Size(300, 60),
@@ -199,37 +216,51 @@ class LoginScreen extends GetView<LoginController> {
                       child: Text("ĐĂNG NHẬP",
                           style: TextStyle(fontSize: 20, color: Colors.black)),
                     ),
-                    SizedBox(height: 20,),
-                    Container(
-                      width: 300,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.blue, Colors.green, Colors.red, Colors.yellow], // Màu gradient
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(25),
-                          border: Border.all(width: 2, color: Colors.white),
-                      ),
-
-                      child: ElevatedButton(
-                        onPressed: controller.gmailLogin,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent, // Để nền trong suốt
-                          shadowColor: Colors.transparent, // Ẩn đổ bóng
-                          minimumSize: Size(300, 60),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                        child: Text(
-                          "ĐĂNG NHẬP GOOGLE",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-
+                    SizedBox(
+                      height: 20,
                     ),
+                    ElevatedButton(
+                      onPressed: controller.gmailLogin,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow.shade600,
+                        fixedSize: Size(220, 45),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Đăng nhập với ",
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.black),
+                            ),
+                            Icon(FontAwesomeIcons.google,
+                                size: 20, color: Colors.black),
+                          ]),
+                    ),
+
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => Get.offNamed(Routes.loginOTP.p),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow.shade600,
+                        fixedSize: Size(220, 45),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      child:
+                      Text(
+                        "Đăng nhập OTP",
+                        style: TextStyle(
+                            fontSize: 15, color: Colors.black),
+                      ),
+                    ),
+
                     SizedBox(
                       height: 20,
                     ),

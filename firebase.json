@@ -1,1 +1,31 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"e-commerce-app-e7077","appId":"1:864531122385:android:1b07e5218bd726ba669df0","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"e-commerce-app-e7077","configurations":{"android":"1:864531122385:android:1b07e5218bd726ba669df0","ios":"1:864531122385:ios:4cbfe4807438ed8c669df0"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "e-commerce-app-e7077",
+          "appId": "1:864531122385:android:1b07e5218bd726ba669df0",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "e-commerce-app-e7077",
+          "configurations": {
+            "android": "1:864531122385:android:1b07e5218bd726ba669df0",
+            "ios": "1:864531122385:ios:4cbfe4807438ed8c669df0"
+          }
+        }
+      }
+    }
+  },
+  "emulators": {
+    "singleProjectMode": true,
+    "auth": {
+      "port": 9099
+    },
+    "ui": {
+      "enabled": true
+    }
+  }
+}

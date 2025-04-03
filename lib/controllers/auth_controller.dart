@@ -1,9 +1,15 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import '../configs/enum/load_status.dart';
 import '../routes/route.dart';
+import '../services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../utils/custom_toast.dart';
 
 enum SupportState { unknown, supported, unsupported }
 
@@ -11,11 +17,16 @@ const kEnableBiometric = true;
 
 class AuthController extends GetxController {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
+  final AuthService _authService = AuthService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  var isLoading = false.obs;
 
   //mặc định
   var supportState = SupportState.unknown.obs;
   var canCheckBiometrics = false.obs;
   var checkFaceId = false.obs;
+  var verificationId = "".obs;
+
   //danh sách các loại xác thực  sinh trắc học
   var availableBiometrics = <BiometricType>[].obs;
   RxBool isFingerprintAvailable = false.obs;
@@ -25,15 +36,18 @@ class AuthController extends GetxController {
   //getter
   //vì nó động Rx nên khi giá trị thay đổi thì mấy biến này tự thay đổi
   bool get isBiometricSupported => _isBiometricSupported.value;
+
   // kEnableBiometric: Một hằng số (constant) dùng để bật/tắt tính năng xác thực sinh trắc học trong app.
   // isBiometricSupported: Một biến hoặc hàm kiểm tra xem thiết bị có hỗ trợ biometric không.
   bool get canLocalAuth => kEnableBiometric && isBiometricSupported;
+
   //xem đã đăng nhâp chưa, ktra xem có thể đăng nhập không và giá trị đăng nhập
   bool get isAuth => (canLocalAuth && _isLocalAuth.value) || !canLocalAuth;
+
   // Rx<int>(0); // Khởi tạo một biến Rx<int> với giá trị ban đầu là 0
   final _loadUserStatus = Rx<LoadStatus>(LoadStatus.initial);
-  LoadStatus get loadUserStatus => _loadUserStatus.value;
 
+  LoadStatus get loadUserStatus => _loadUserStatus.value;
 
   //hàm tự chạy khi khởi tạo
   @override
@@ -63,7 +77,7 @@ class AuthController extends GetxController {
   Future<void> _checkDeviceSupport() async {
     try {
       _isBiometricSupported.value =
-      await _localAuthentication.isDeviceSupported();
+          await _localAuthentication.isDeviceSupported();
       supportState.value = _isBiometricSupported.value
           ? SupportState.supported
           : SupportState.unsupported;
@@ -85,9 +99,10 @@ class AuthController extends GetxController {
   Future<void> getAvailableBiometrics() async {
     try {
       availableBiometrics.value =
-      await _localAuthentication.getAvailableBiometrics();
+          await _localAuthentication.getAvailableBiometrics();
       print(availableBiometrics);
-      isFingerprintAvailable.value = availableBiometrics.contains(BiometricType.fingerprint);
+      isFingerprintAvailable.value =
+          availableBiometrics.contains(BiometricType.fingerprint);
     } on PlatformException catch (e) {
       availableBiometrics.value = <BiometricType>[];
       print(e);
@@ -119,10 +134,12 @@ class AuthController extends GetxController {
         //hiện thị hộp thoại yêu cầu xác thực, true khi xác thực thành công, false khi thất bại
         final isAuth = await _localAuthentication.authenticate(
           localizedReason:
-          reason ?? 'Please complete the biometrics to proceed.',
+              reason ?? 'Please complete the biometrics to proceed.',
           options: const AuthenticationOptions(
-            biometricOnly: true, //Chỉ cho phép xác thực sinh trắc học, ko dùng pin, mật khẩu
-            useErrorDialogs: true, //Hiển thị hộp thoại lỗi mặc định nếu xác thực thất bại, khong thì tự try cache đẻ xử lý lỗi
+            biometricOnly: true,
+            //Chỉ cho phép xác thực sinh trắc học, ko dùng pin, mật khẩu
+            useErrorDialogs: true,
+            //Hiển thị hộp thoại lỗi mặc định nếu xác thực thất bại, khong thì tự try cache đẻ xử lý lỗi
             stickyAuth: true,
             //Duy trì phiên xác thực ngay cả khi ứng dụng bị tạm dừng (ví dụ: khi chuyển sang ứng dụng khác hoặc màn hình tắt).
           ),
@@ -142,5 +159,136 @@ class AuthController extends GetxController {
   Future<void> loginWithPass() async {
     _isLocalAuth.value = true;
     await Get.offAllNamed(Routes.products.p);
+  }
+
+  Future<void> loginWithEmail(String email, String password) async {
+    isLoading.value = true;
+    User? user = await _authService.signInWithEmail(email, password);
+    isLoading.value = false;
+    if (user != null) {
+      Get.offAllNamed(Routes.products.sp); // Chuyển đến trang chính
+      CustomToast.show(
+        title: "Thành công",
+        message: "Bạn đã đăng nhập thành công !",
+        backgroundColor: Colors.green,
+        icon: FontAwesomeIcons.circleCheck,
+      );
+    } else {
+      CustomToast.show(
+        title: "Cảnh báo",
+        message: "Sai tài khoản hay mật khẩu",
+        backgroundColor: Colors.orange,
+        icon: Icons.warning,
+      );
+    }
+  }
+
+  Future<bool> register(String email, String password) async {
+    User? user = await _authService.signUpWithEmail(email, password);
+    isLoading.value = false;
+    if (user != null) {
+      Get.offAllNamed(Routes.login.p);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return true;
+    } catch (e) {
+      print("Lỗi khi resetPass: $e");
+      return false;
+    }
+  }
+
+  // Gửi mã OTP đến số điện thoại
+  Future<void> sendOTP(String phoneNumber) async {
+    try {
+      String formattedPhone = formatPhoneNumber(phoneNumber);
+
+      await _auth.verifyPhoneNumber(
+        phoneNumber: formattedPhone,
+        timeout: Duration(seconds: 60),
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await _auth.signInWithCredential(credential);
+          CustomToast.show(
+            title: "Thành công",
+            message: "Đăng nhập tự động !",
+            backgroundColor: Colors.green,
+            icon: FontAwesomeIcons.circleCheck,
+          );
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          CustomToast.show(
+            title: "Thất bại",
+            message: "Nhập sai số điện thoại",
+            backgroundColor: Colors.orange,
+            icon: Icons.warning,
+          );
+        },
+        codeSent: (String verId, int? resendToken) {
+          verificationId.value = verId;
+          Get.toNamed("/otp"); // Chuyển sang màn OTP
+        },
+        codeAutoRetrievalTimeout: (String verId) {
+          verificationId.value = verId;
+        },
+      );
+    } catch (e) {
+      CustomToast.show(
+        title: "Lỗi",
+        message: "Gửi OTP thất bại !",
+        backgroundColor: Colors.red,
+        icon: Icons.error,
+      );
+      print("Gửi OTP thất bại: ${e.toString()}");
+    }
+  }
+
+  // Hàm xử lý số điện thoại
+  String formatPhoneNumber(String phone) {
+    phone = phone.trim();
+
+    // Nếu số điện thoại bắt đầu bằng "0", đổi thành "+84"
+    if (phone.startsWith("0")) {
+      phone = "+84" + phone.substring(1);
+    }
+
+    // Nếu số điện thoại đã có "+84", giữ nguyên
+    if (!phone.startsWith("+")) {
+      phone = "+84" + phone;
+    }
+    print("phone format: $phone");
+
+    return phone;
+  }
+
+  // Xác thực OTP
+  Future<void> verifyOTP(String otp) async {
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId.value,
+        smsCode: otp,
+      );
+      await _auth.signInWithCredential(credential);
+      CustomToast.show(
+        title: "Thành công",
+        message: "Bạn đã đăng nhập thành công !",
+        backgroundColor: Colors.green,
+        icon: FontAwesomeIcons.circleCheck,
+      );
+      Get.offAllNamed(
+          Routes.products.p); // Chuyển hướng sau khi đăng nhập thành công
+    } catch (e) {
+      CustomToast.show(
+        title: "Lỗi",
+        message: "Đăng nhập thất bại, vui lòng thử lại!",
+        backgroundColor: Colors.red,
+        icon: Icons.error,
+      );
+    }
   }
 }

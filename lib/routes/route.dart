@@ -3,14 +3,21 @@ import 'package:ecomercy_app_flutter/views/blog/blog_view.dart';
 import 'package:ecomercy_app_flutter/views/cart/cart_view.dart';
 import 'package:ecomercy_app_flutter/views/checkout/checkout_binding.dart';
 import 'package:ecomercy_app_flutter/views/checkout/checkout_view.dart';
+import 'package:ecomercy_app_flutter/views/address/address_list/shiping_address_view.dart';
 import 'package:ecomercy_app_flutter/views/login/login_screen.dart';
+import 'package:ecomercy_app_flutter/views/login_otp/otp_view.dart';
 import 'package:ecomercy_app_flutter/views/product_detail/product_detail_binding.dart';
 import 'package:ecomercy_app_flutter/views/product_detail/product_detail_screen.dart';
 import 'package:ecomercy_app_flutter/views/products/products_screen.dart';
 import 'package:ecomercy_app_flutter/views/splash/splash_screen.dart';
 import 'package:get/get.dart';
 
+import '../views/address/add_address/add_address_view.dart';
+import '../views/address/edit_address/edit_address_view.dart';
+import '../views/forget_password/forget_pass_view.dart';
 import '../views/home_page/home_screen.dart';
+import '../views/login_otp/login_otp_view.dart';
+import '../views/register/register_view.dart';
 import '../views/products/product_binding.dart';
 
 class RoutePath {
@@ -50,6 +57,7 @@ class SpecialRoute {
 abstract class Routes {
   static const splash = RoutePath('/');
   static const login = RoutePath('/login');
+  static const register = RoutePath('/register');
   static const main = RoutePath('/main');
   static const unauthenticated = RoutePath('/401');
   static const blogs = RoutePath('/blog');
@@ -57,6 +65,12 @@ abstract class Routes {
   static const product_detail = RoutePath('/productDetail');
   static const cart = RoutePath('/cart');
   static const checkout = RoutePath('/checkout');
+  static const shippingAddress = RoutePath('/shipingAddress');
+  static const forgotPassword = RoutePath('/forgotPassWord');
+  static const loginOTP = RoutePath('/loginOTP');
+  static const otp = RoutePath('/otp');
+  static const addAddress = RoutePath('/addAddress');
+  static const editAddress = RoutePath('/editAddress');
 }
 
 final List<GetPage> getPages = [
@@ -68,10 +82,55 @@ final List<GetPage> getPages = [
   GetPage(
       name: Routes.login.sp,
       page: () => LoginScreen(),
+      transition: Transition.cupertino,
+      // Áp dụng hiệu ứng mặc định
+      transitionDuration: Duration(milliseconds: 500),
       binding: LoginBinding()),
+  GetPage(
+      name: Routes.loginOTP.sp,
+      page: () => LoginOTPView(),
+      transition: Transition.cupertino,
+      // Áp dụng hiệu ứng mặc định
+      transitionDuration: Duration(milliseconds: 500),
+      binding: LoginOTPBinding()),
+  GetPage(
+    name: Routes.forgotPassword.sp,
+    page: () => ForgotPasswordView(),
+    transition: Transition.cupertino,
+    // Áp dụng hiệu ứng mặc định
+    transitionDuration: Duration(milliseconds: 500),
+    binding: ForgetPassBinding(),
+  ),
+  GetPage(
+    name: Routes.register.sp,
+    page: () => RegisterView(),
+    binding: RegisterBinding(),
+    transition: Transition.cupertino,
+    // Áp dụng hiệu ứng mặc định
+    transitionDuration: Duration(milliseconds: 500),
+  ),
+  GetPage(
+    name: Routes.addAddress.sp,
+    page: () => AddAddressView(),
+    binding: AddAddressBinding(),
+    transition: Transition.cupertino,
+    transitionDuration: Duration(milliseconds: 500),
+  ),
+  GetPage(
+    name: Routes.editAddress.sp,
+    page: () => EditAddressView(),
+    binding: EditAddressBinding(),
+    transition: Transition.cupertino,
+    transitionDuration: Duration(milliseconds: 500),
+  ),
   GetPage(
     name: Routes.main.sp,
     page: () => HomeScreen(),
+  ),
+  GetPage(
+    name: Routes.otp.p,
+    page: () => OtpView(),
+    binding: OtpBinding(),
   ),
   GetPage(
     name: Routes.blogs.sp,
@@ -97,4 +156,8 @@ final List<GetPage> getPages = [
     page: () => CheckoutView(),
     binding: CheckoutBinding(),
   ),
+  GetPage(
+    name: Routes.shippingAddress.sp,
+    page: () => ShippingAddressView(),
+  )
 ].toList();

@@ -55,6 +55,14 @@ class LoginController extends GetxController {
       Get.snackbar('Error', 'Sai mã pin');
     }
   }
+  void loginWithEmail() async{
+    authController.loginWithEmail(state.email.value, state.password.value);
+  }
+
+  void validateEmail(String value) {
+    String pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$'; // xxx@xxx
+    state.isValidEmail.value = RegExp(pattern).hasMatch(value);
+  }
 
   /* Google Login */
   Future<void> gmailLogin() async {

@@ -1,3 +1,4 @@
+import 'package:ecomercy_app_flutter/services/noti_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -294,6 +295,27 @@ class LoginScreen extends GetView<LoginController> {
                               ),
                             )
                           : SizedBox.shrink(),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        NotiService().showNotification(
+                          title: "Title",
+                          body: "Body",
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow.shade600,
+                        fixedSize: Size(220, 45),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      child:
+                      Text(
+                        "Test",
+                        style: TextStyle(
+                            fontSize: 15, color: Colors.black),
+                      ),
                     ),
                   ],
                 ),

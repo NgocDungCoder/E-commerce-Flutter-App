@@ -1,1 +1,0 @@
- E:\\ecomercy_app_flutter\\.dart_tool\\flutter_build\\bf9b5a4444c9c9d58737cffad745d0b8\\native_assets.yaml: 

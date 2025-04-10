@@ -1,5 +1,4 @@
-
-import 'package:ecomercy_app_flutter/configs/styles/theme.dart';
+import 'package:ecomercy_app_flutter/configs/styles/themes/themes.dart';
 import 'package:ecomercy_app_flutter/widgets/Text/primary_text.dart';
 import 'package:ecomercy_app_flutter/widgets/Scaffold/primary_scaffold.dart';
 import 'package:ecomercy_app_flutter/widgets/footer/footer.dart';
@@ -18,15 +17,15 @@ class ProductDetailScreen extends StatelessWidget {
         builder: (logic) {
           return logic.state.isInitialLoading.value
               ? Container(
-                  color: ThemeConfigs.background,
-                  child: const Center(
+                  color: Theme.of(context).colorScheme.surface,
+                  child: Center(
                     child: CircularProgressIndicator(
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 )
               : Container(
-                  color: ThemeConfigs.background,
+                  color: Theme.of(context).colorScheme.surface,
                   child: ListView(
                     children: [
                       Container(
@@ -39,35 +38,36 @@ class ProductDetailScreen extends StatelessWidget {
                       SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
-                          logic.state.product['name'] ?? "Tên sản phẩm",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
+                        child: PrimaryText(
+                            logic.state.product['name'] ?? "Tên sản phẩm",
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
-                          logic.state.product['detail'] ?? "Chi tiết sản phẩm",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.normal),
-                        ),
+                        child: PrimaryText(
+                            logic.state.product['detail'] ??
+                                "Chi tiết sản phẩm",
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal),
                       ),
                       SizedBox(height: 10),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
+                        child: PrimaryText(
                           "Giá: ${logic.state.product['price'] ?? 'N/A'} VND",
-                          style: TextStyle(fontSize: 18, color: Colors.red),
+                          fontSize: 18,
+                          color: Colors.pink,
                         ),
                       ),
                       SizedBox(height: 10),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: PrimaryText(
                           "${logic.state.product['sold'] ?? 0} lượt mua",
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          fontSize: 16,
+                          color: ThemeConfigs.textSecondary(context),
                         ),
                       ),
                       SizedBox(height: 20),
@@ -136,6 +136,7 @@ class ProductDetailScreen extends StatelessWidget {
                             ),
                             PrimaryText(
                               'We work with monitoring programmes to ensure compliance with safety, health and quality standards for our products.',
+                              maxLines: 3,
                               fontSize: 16,
                             ),
                             SizedBox(
@@ -152,6 +153,7 @@ class ProductDetailScreen extends StatelessWidget {
                               'To keep your jackets and coats clean, you only need to freshen them up and go over them with a cloth or a clothes brush. If you need to dry clean a garment, '
                               'look for a dry cleaner that uses technologies that are respectful of the environment.',
                               fontSize: 16,
+                              maxLines: 3,
                             ),
                             SizedBox(
                               height: 30,
@@ -246,6 +248,9 @@ class ProductDetailScreen extends StatelessWidget {
                                                     Icons
                                                         .keyboard_arrow_down_outlined,
                                                     size: 40,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSurface,
                                                   ),
                                           ),
                                         ],
@@ -257,175 +262,19 @@ class ProductDetailScreen extends StatelessWidget {
                                           width: 310,
                                           // Điều chỉnh chiều dài của thanh gạch
                                           height: 1,
-                                          color: Colors.grey,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
                                           margin: EdgeInsets.only(
                                               top: 8), // Cách lề trên một chút
                                         ),
                                       ),
-                                      SizedBox(height: 15,),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
                                     ],
                                   ),
                                 ),
-
-                                // Row(
-                                //   mainAxisAlignment:
-                                //       MainAxisAlignment.spaceBetween,
-                                //   crossAxisAlignment: CrossAxisAlignment.start,
-                                //   children: [
-                                //     Icon(
-                                //       Icons.local_shipping_outlined,
-                                //       size: 35,
-                                //     ),
-                                //     Row(
-                                //       children: [
-                                //         Column(
-                                //           crossAxisAlignment:
-                                //               CrossAxisAlignment.start,
-                                //           children: [
-                                //             PrimaryText(
-                                //               'Free Flat Rate Shipping',
-                                //               fontWeight: FontWeight.w500,
-                                //               fontSize: 18,
-                                //             ),
-                                //             logic.state.isDropdownOpen.value
-                                //                 ? Container(
-                                //                     child: Column(
-                                //                       crossAxisAlignment:
-                                //                           CrossAxisAlignment
-                                //                               .start,
-                                //                       children: [
-                                //                         PrimaryText(
-                                //                             'Estimated to be delivered on '),
-                                //                         PrimaryText(
-                                //                             '09/11/2021 - 12/11/2021'),
-                                //                       ],
-                                //                     ),
-                                //                   )
-                                //                 : SizedBox(),
-                                //           ],
-                                //         ),
-                                //       ],
-                                //     ),
-                                //     IconButton(
-                                //       onPressed: logic.toggleDropdown,
-                                //       icon: logic.state.isDropdownOpen.value
-                                //           ? Icon(
-                                //         Icons.keyboard_arrow_up_outlined,
-                                //         size: 40,
-                                //       )
-                                //           : Icon(
-                                //         Icons
-                                //             .keyboard_arrow_down_outlined,
-                                //         size: 40,
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                                // Align(
-                                //   alignment:
-                                //       Alignment.centerRight, // Căn lề trái
-                                //   child: Container(
-                                //     width:
-                                //         310, // Điều chỉnh chiều dài của thanh gạch
-                                //     height: 1,
-                                //     color: Colors.grey,
-                                //     margin: EdgeInsets.only(
-                                //         top: 8), // Cách lề trên một chút
-                                //   ),
-                                // ),
-                                // SizedBox(height: 15),
-                                // Row(
-                                //   mainAxisAlignment:
-                                //       MainAxisAlignment.spaceBetween,
-                                //   crossAxisAlignment: CrossAxisAlignment.start,
-                                //   children: [
-                                //     Icon(
-                                //       Icons.discount_outlined,
-                                //       size: 35,
-                                //     ),
-                                //     Column(
-                                //       crossAxisAlignment:
-                                //           CrossAxisAlignment.start,
-                                //       children: [
-                                //         PrimaryText(
-                                //           'Free Flat Rate Shipping',
-                                //           fontWeight: FontWeight.w500,
-                                //           fontSize: 18,
-                                //         ),
-                                //         logic.state.isDropdownOpen.value
-                                //             ? Container(
-                                //                 child: Column(
-                                //                   crossAxisAlignment:
-                                //                       CrossAxisAlignment.start,
-                                //                   children: [
-                                //                     PrimaryText(
-                                //                         'Estimated to be delivered on'),
-                                //                     PrimaryText(
-                                //                         '09/11/2021 - 12/11/2021'),
-                                //                   ],
-                                //                 ),
-                                //               )
-                                //             : SizedBox()
-                                //       ],
-                                //     ),
-                                //     IconButton(
-                                //       onPressed: logic.toggleDropdown,
-                                //       icon: logic.state.isDropdownOpen.value
-                                //           ? Icon(
-                                //               Icons.keyboard_arrow_up_outlined,
-                                //               size: 40,
-                                //             )
-                                //           : Icon(
-                                //               Icons
-                                //                   .keyboard_arrow_down_outlined,
-                                //               size: 40,
-                                //             ),
-                                //     ),
-                                //   ],
-                                // ),
-                                // Align(
-                                //   alignment:
-                                //       Alignment.centerRight, // Căn lề trái
-                                //   child: Container(
-                                //     width:
-                                //         310, // Điều chỉnh chiều dài của thanh gạch
-                                //     height: 1,
-                                //     color: Colors.grey,
-                                //     margin: EdgeInsets.only(
-                                //         top: 8), // Cách lề trên một chút
-                                //   ),
-                                // ),
-                                // SizedBox(height: 15),
-                                // Row(
-                                //   mainAxisAlignment:
-                                //       MainAxisAlignment.spaceBetween,
-                                //   crossAxisAlignment: CrossAxisAlignment.start,
-                                //   children: [
-                                //     Icon(
-                                //       Icons.sync,
-                                //       size: 35,
-                                //     ),
-                                //     PrimaryText(
-                                //       'Free Flat Rate Shipping',
-                                //       fontWeight: FontWeight.w500,
-                                //       fontSize: 18,
-                                //     ),
-                                //     IconButton(
-                                //       onPressed: logic.toggleDropdown,
-                                //       icon: logic.state.isDropdownOpen.value
-                                //           ? Icon(
-                                //         Icons.keyboard_arrow_up_outlined,
-                                //         size: 40,
-                                //       )
-                                //           : Icon(
-                                //         Icons
-                                //             .keyboard_arrow_down_outlined,
-                                //         size: 40,
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-
                                 SizedBox(
                                   height: 50,
                                 ),
@@ -442,7 +291,8 @@ class ProductDetailScreen extends StatelessWidget {
                                     width:
                                         250, // Điều chỉnh chiều dài của thanh gạch
                                     height: 1,
-                                    color: Colors.grey,
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
                                     margin: EdgeInsets.only(
                                         top: 8), // Cách lề trên một chút
                                   ),
@@ -481,9 +331,13 @@ class ProductDetailScreen extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(15),
-                                              color: Colors.white,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                               border: Border.all(
-                                                  color: Colors.black,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSurface,
                                                   width: 1),
                                             ),
                                             child: Column(
@@ -512,16 +366,11 @@ class ProductDetailScreen extends StatelessWidget {
                                                   padding: const EdgeInsets
                                                       .symmetric(
                                                       horizontal: 8.0),
-                                                  child: Text(
-                                                    product['name'] ??
-                                                        'Tên sản phẩm',
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 15),
-                                                  ),
+                                                  child: PrimaryText(
+                                                      product['name'] ??
+                                                          'Tên sản phẩm',
+                                                      maxLines: 1,
+                                                      fontSize: 15),
                                                 ),
                                                 Spacer(),
                                                 Row(
@@ -533,33 +382,25 @@ class ProductDetailScreen extends StatelessWidget {
                                                       padding: const EdgeInsets
                                                           .symmetric(
                                                           horizontal: 8.0),
-                                                      child: Text(
-                                                        '${product['price'] ?? 'Giá bán'} đ',
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: const TextStyle(
-                                                            color: ThemeConfigs
-                                                                .redText,
-                                                            fontSize: 13,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
+                                                      child: PrimaryText(
+                                                          '${product['price'] ?? 'Giá bán'} đ',
+                                                          maxLines: 1,
+                                                          color: Colors.pink,
+                                                          fontSize: 13,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                     Padding(
                                                       padding: const EdgeInsets
                                                           .symmetric(
                                                           horizontal: 8.0),
-                                                      child: Text(
-                                                        '${product['sold'] ?? 0} đã bán',
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: const TextStyle(
-                                                            color: Colors.grey,
-                                                            fontSize: 10),
-                                                      ),
+                                                      child: PrimaryText(
+                                                          '${product['sold'] ?? 0} đã bán',
+                                                          maxLines: 1,
+                                                          color: ThemeConfigs
+                                                              .textSecondary(
+                                                                  context),
+                                                          fontSize: 10),
                                                     ),
                                                   ],
                                                 )
@@ -618,7 +459,8 @@ class ProductDetailScreen extends StatelessWidget {
                                     width:
                                         200, // Điều chỉnh chiều dài của thanh gạch
                                     height: 1,
-                                    color: Colors.grey,
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
                                     margin: EdgeInsets.only(
                                         top: 8), // Cách lề trên một chút
                                   ),

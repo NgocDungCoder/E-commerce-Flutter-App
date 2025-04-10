@@ -1,22 +1,29 @@
+import 'package:ecomercy_app_flutter/views/bill/bill_detail_binding.dart';
+import 'package:ecomercy_app_flutter/views/bill/bill_detail_view.dart';
 import 'package:ecomercy_app_flutter/views/blog/blog_binding.dart';
 import 'package:ecomercy_app_flutter/views/blog/blog_view.dart';
 import 'package:ecomercy_app_flutter/views/cart/cart_view.dart';
 import 'package:ecomercy_app_flutter/views/checkout/checkout_binding.dart';
 import 'package:ecomercy_app_flutter/views/checkout/checkout_view.dart';
 import 'package:ecomercy_app_flutter/views/address/address_list/shiping_address_view.dart';
+import 'package:ecomercy_app_flutter/views/info_user/info_user_view.dart';
 import 'package:ecomercy_app_flutter/views/login/login_screen.dart';
 import 'package:ecomercy_app_flutter/views/login_otp/otp_view.dart';
+import 'package:ecomercy_app_flutter/views/notification/notification_view.dart';
 import 'package:ecomercy_app_flutter/views/product_detail/product_detail_binding.dart';
 import 'package:ecomercy_app_flutter/views/product_detail/product_detail_screen.dart';
 import 'package:ecomercy_app_flutter/views/products/products_screen.dart';
+import 'package:ecomercy_app_flutter/views/setting/setting_view.dart';
 import 'package:ecomercy_app_flutter/views/splash/splash_screen.dart';
 import 'package:get/get.dart';
 
 import '../views/address/add_address/add_address_view.dart';
 import '../views/address/edit_address/edit_address_view.dart';
+import '../views/bill/success_payment_view.dart';
 import '../views/forget_password/forget_pass_view.dart';
-import '../views/home_page/home_screen.dart';
 import '../views/login_otp/login_otp_view.dart';
+import '../views/main/home/home_view.dart';
+import '../views/main/main_view.dart';
 import '../views/register/register_view.dart';
 import '../views/products/product_binding.dart';
 
@@ -59,6 +66,9 @@ abstract class Routes {
   static const login = RoutePath('/login');
   static const register = RoutePath('/register');
   static const main = RoutePath('/main');
+  static const home = RoutePath('/home', parent: main);
+  static const notification = RoutePath('/notification', parent: main);
+  static const profile = RoutePath('/profile', parent: main);
   static const unauthenticated = RoutePath('/401');
   static const blogs = RoutePath('/blog');
   static const products = RoutePath('/products');
@@ -71,6 +81,9 @@ abstract class Routes {
   static const otp = RoutePath('/otp');
   static const addAddress = RoutePath('/addAddress');
   static const editAddress = RoutePath('/editAddress');
+  static const successPayment = RoutePath('/successPayment');
+  static const billDetail = RoutePath('/billDetail');
+  static const setting = RoutePath('/setting');
 }
 
 final List<GetPage> getPages = [
@@ -85,7 +98,29 @@ final List<GetPage> getPages = [
       transition: Transition.cupertino,
       // Áp dụng hiệu ứng mặc định
       transitionDuration: Duration(milliseconds: 500),
-      binding: LoginBinding()),
+      binding: LoginBinding(),),
+  GetPage(
+    name: Routes.setting.sp,
+    page: () => SettingView(),
+    transition: Transition.cupertino,
+    // Áp dụng hiệu ứng mặc định
+    transitionDuration: Duration(milliseconds: 500),
+    binding: SettingBinding(),),
+  GetPage(
+      name: Routes.successPayment.sp,
+      page: () => SuccessPaymentView(),
+      transition: Transition.cupertino,
+      // Áp dụng hiệu ứng mặc định
+      transitionDuration: Duration(milliseconds: 500),
+      binding: LoginBinding(),),
+  GetPage(
+      name: Routes.billDetail.sp,
+      page: () => BillDetailView(),
+      binding: BillDetailBinding(),
+      transition: Transition.cupertino,
+      // Áp dụng hiệu ứng mặc định
+      transitionDuration: Duration(milliseconds: 500),
+      ),
   GetPage(
       name: Routes.loginOTP.sp,
       page: () => LoginOTPView(),
@@ -124,11 +159,23 @@ final List<GetPage> getPages = [
     transitionDuration: Duration(milliseconds: 500),
   ),
   GetPage(
-    name: Routes.main.sp,
-    page: () => HomeScreen(),
+    name: Routes.home.sp,
+    page: () => HomeView(),
   ),
   GetPage(
-    name: Routes.otp.p,
+    name: Routes.profile.sp,
+    page: () => ProfileView(),
+  ),
+  GetPage(
+    name: Routes.notification.sp,
+    page: () => NotificationView(),
+  ),
+  GetPage(
+    name: Routes.main.sp,
+    page: () => MainView(),
+  ),
+  GetPage(
+    name: Routes.otp.sp,
     page: () => OtpView(),
     binding: OtpBinding(),
   ),
@@ -143,12 +190,12 @@ final List<GetPage> getPages = [
     binding: ProductBinding(),
   ),
   GetPage(
-    name: Routes.product_detail.p,
+    name: Routes.product_detail.sp,
     page: () => ProductDetailScreen(),
     binding: ProductDetailBinding(),
   ),
   GetPage(
-    name: Routes.cart.p,
+    name: Routes.cart.sp,
     page: () => CartView(),
   ),
   GetPage(

@@ -1,4 +1,4 @@
-import 'package:ecomercy_app_flutter/configs/styles/theme.dart';
+import 'package:ecomercy_app_flutter/configs/styles/themes/themes.dart';
 import 'package:ecomercy_app_flutter/routes/route.dart';
 import 'package:ecomercy_app_flutter/views/products/product_logic.dart';
 import 'package:ecomercy_app_flutter/widgets/Scaffold/primary_scaffold.dart';
@@ -17,7 +17,7 @@ class ProductsScreen extends StatelessWidget {
       body: GetX<ProductLogic>(builder: (controller) {
         return controller.state.isInitialLoading.value
             ? Container(
-                color: ThemeConfigs.background,
+                color: Theme.of(context).colorScheme.surface,
                 child: Center(
                   child: Lottie.asset('assets/animations/cat_loading.json',
                       width: 150, height: 150),
@@ -26,7 +26,7 @@ class ProductsScreen extends StatelessWidget {
             : RefreshIndicator(
                 onRefresh: controller.refreshUser,
                 child: Container(
-                  color: ThemeConfigs.background,
+                  color: Theme.of(context).colorScheme.surface,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: ListView(
@@ -38,16 +38,16 @@ class ProductsScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "${controller.state.totalProducts} sản phẩm",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 20),
-                            ),
+                            PrimaryText(
+                                "${controller.state.totalProducts} sản phẩm",
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20),
                             IconButton(
                               icon: controller.state.isListView.value
                                   ? Icon(Icons.list_alt_rounded)
                                   : Icon(Icons.grid_view),
                               onPressed: controller.toggleListView,
+                              color: Theme.of(context).colorScheme.onSurface,
                             )
                           ],
                         ),
@@ -92,7 +92,9 @@ class ProductsScreen extends StatelessWidget {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(15),
-                                                color: ThemeConfigs.whiteText,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                                 border: Border.all(
                                                     color: ThemeConfigs.border,
                                                     width: 0.5),
@@ -125,17 +127,14 @@ class ProductsScreen extends StatelessWidget {
                                                     padding: const EdgeInsets
                                                         .symmetric(
                                                         horizontal: 8.0),
-                                                    child: Text(
-                                                      product['name'] ??
-                                                          'Tên sản phẩm',
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: const TextStyle(
-                                                          color:
-                                                              ThemeConfigs.text,
-                                                          fontSize: 14),
-                                                    ),
+                                                    child: PrimaryText(
+                                                        product['name'] ??
+                                                            'Tên sản phẩm',
+                                                        maxLines: 2,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .onPrimary,
+                                                        fontSize: 14),
                                                   ),
                                                   const Spacer(),
                                                   Row(
@@ -149,20 +148,14 @@ class ProductsScreen extends StatelessWidget {
                                                                 .symmetric(
                                                                 horizontal:
                                                                     8.0),
-                                                        child: Text(
-                                                          '${product['price'] ?? 'Giá bán'} đ',
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: const TextStyle(
-                                                              color:
-                                                                  ThemeConfigs
-                                                                      .redText,
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
+                                                        child: PrimaryText(
+                                                            '${product['price'] ?? 'Giá bán'} đ',
+                                                            maxLines: 1,
+                                                            color: Colors.pink,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
                                                       ),
                                                       Padding(
                                                         padding:
@@ -170,17 +163,13 @@ class ProductsScreen extends StatelessWidget {
                                                                 .symmetric(
                                                                 horizontal:
                                                                     8.0),
-                                                        child: Text(
-                                                          '${product['sold'] ?? 0} đã bán',
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  fontSize: 10),
-                                                        ),
+                                                        child: PrimaryText(
+                                                            '${product['sold'] ?? 0} đã bán',
+                                                            maxLines: 1,
+                                                            color: Theme.of(context)
+                                                                .colorScheme
+                                                                .onPrimary,
+                                                            fontSize: 10),
                                                       ),
                                                     ],
                                                   )
@@ -396,14 +385,16 @@ class ProductsScreen extends StatelessWidget {
                                                                 width: 30,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: Theme.of(context)
+                                                                      .colorScheme
+                                                                      .primary,
                                                                   shape: BoxShape
                                                                       .circle,
                                                                   border: Border.all(
                                                                       width: 1,
-                                                                      color: Colors
-                                                                          .grey),
+                                                                      color: Theme.of(context)
+                                                                          .colorScheme
+                                                                          .onPrimary),
                                                                 ),
                                                                 child: Center(
                                                                     child:
@@ -420,14 +411,16 @@ class ProductsScreen extends StatelessWidget {
                                                                 width: 30,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: Theme.of(context)
+                                                                      .colorScheme
+                                                                      .primary,
                                                                   shape: BoxShape
                                                                       .circle,
                                                                   border: Border.all(
                                                                       width: 1,
-                                                                      color: Colors
-                                                                          .grey),
+                                                                      color: Theme.of(context)
+                                                                          .colorScheme
+                                                                          .onPrimary),
                                                                 ),
                                                                 child: Center(
                                                                     child:
@@ -444,14 +437,16 @@ class ProductsScreen extends StatelessWidget {
                                                                 width: 30,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: Theme.of(context)
+                                                                      .colorScheme
+                                                                      .primary,
                                                                   shape: BoxShape
                                                                       .circle,
                                                                   border: Border.all(
                                                                       width: 1,
-                                                                      color: Colors
-                                                                          .grey),
+                                                                      color: Theme.of(context)
+                                                                          .colorScheme
+                                                                          .onPrimary),
                                                                 ),
                                                                 child: Center(
                                                                     child:

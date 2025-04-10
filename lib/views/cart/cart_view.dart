@@ -1,8 +1,9 @@
-import 'package:ecomercy_app_flutter/configs/styles/theme.dart';
+import 'package:ecomercy_app_flutter/configs/styles/themes/themes.dart';
 import 'package:ecomercy_app_flutter/views/cart/cart_logic.dart';
 import 'package:ecomercy_app_flutter/widgets/Text/primary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../routes/route.dart';
 
@@ -10,7 +11,7 @@ class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         appBar: AppBar(
           elevation: 0,
           leading: IconButton(
@@ -25,10 +26,10 @@ class CartView extends StatelessWidget {
         body: GetX<CartLogic>(builder: (logic) {
           return logic.state.isIndicatorLoding.value
               ? Container(
+                  color: Theme.of(context).colorScheme.surface,
                   child: Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.black,
-                    ),
+                    child: Lottie.asset('assets/animations/cat_loading.json',
+                        width: 150, height: 150),
                   ),
                 )
               : RefreshIndicator(
@@ -36,7 +37,7 @@ class CartView extends StatelessWidget {
                   child: Stack(
                     children: [
                       Container(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         child: ListView(
                           children: [
                             Padding(
@@ -51,10 +52,13 @@ class CartView extends StatelessWidget {
                             logic.state.isLoading.value
                                 ? Container(
                                     height: 600,
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
                                     child: Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.black,
-                                      ),
+                                      child: Lottie.asset(
+                                          'assets/animations/load_more.json',
+                                          width: 150,
+                                          height: 150),
                                     ),
                                   )
                                 : ListView.builder(
@@ -157,8 +161,8 @@ class CartView extends StatelessWidget {
                                                                   const Icon(
                                                                       Icons
                                                                           .local_offer,
-                                                                      color: ThemeConfigs
-                                                                          .whiteText,
+                                                                      color: Colors
+                                                                          .white,
                                                                       size: 14),
                                                                   const SizedBox(
                                                                       width: 3),
@@ -232,8 +236,9 @@ class CartView extends StatelessWidget {
                                                                     border: Border.all(
                                                                         width:
                                                                             1,
-                                                                        color: Colors
-                                                                            .black12)),
+                                                                        color: Theme.of(context)
+                                                                            .colorScheme
+                                                                            .onSurface)),
                                                                 child:
                                                                     IconButton(
                                                                         onPressed:
@@ -241,8 +246,14 @@ class CartView extends StatelessWidget {
                                                                                 {
                                                                                   logic.updateQuantityItem(product['cardID'], product['quantity'] - 1),
                                                                                 },
-                                                                        icon: Icon(Icons
-                                                                            .remove),
+                                                                        icon:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .remove,
+                                                                          color: Theme.of(context)
+                                                                              .colorScheme
+                                                                              .onSurface,
+                                                                        ),
                                                                         padding:
                                                                             EdgeInsets
                                                                                 .zero,
@@ -269,8 +280,9 @@ class CartView extends StatelessWidget {
                                                                       border: Border.all(
                                                                           width:
                                                                               1,
-                                                                          color: Colors
-                                                                              .black12)),
+                                                                          color: Theme.of(context)
+                                                                              .colorScheme
+                                                                              .onSurface)),
                                                                   child:
                                                                       IconButton(
                                                                     onPressed: () => logic.updateQuantityItem(
@@ -279,8 +291,12 @@ class CartView extends StatelessWidget {
                                                                         product['quantity'] +
                                                                             1),
                                                                     icon: Icon(
-                                                                        Icons
-                                                                            .add),
+                                                                      Icons.add,
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .colorScheme
+                                                                          .onSurface,
+                                                                    ),
                                                                     padding:
                                                                         EdgeInsets
                                                                             .zero,
@@ -297,8 +313,7 @@ class CartView extends StatelessWidget {
                                                                   left: 12),
                                                           child: PrimaryText(
                                                             '${product['price'].toString()} đ',
-                                                            color: ThemeConfigs
-                                                                .redText,
+                                                            color: Colors.pink,
                                                             fontSize: 17,
                                                             fontWeight:
                                                                 FontWeight.w400,
@@ -325,7 +340,7 @@ class CartView extends StatelessWidget {
                         child: Container(
                           height: 180,
                           width: double.infinity,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primary,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -339,7 +354,8 @@ class CartView extends StatelessWidget {
                                     width: double.infinity,
                                     // Điều chỉnh chiều dài của thanh gạch
                                     height: 1,
-                                    color: Colors.grey,
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
                                   ),
                                 ),
                               ),
@@ -378,7 +394,7 @@ class CartView extends StatelessWidget {
                                       '${logic.state.subTotal.toString()} đ',
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: ThemeConfigs.redText,
+                                      color: Colors.pink,
                                     ),
                                   ],
                                 ),

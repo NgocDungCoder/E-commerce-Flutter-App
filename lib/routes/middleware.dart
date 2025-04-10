@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
 
 final List<SpecialRoute> privateRoutes = <RoutePath>[
-  Routes.products,
+  Routes.login,
 ].map((a) => SpecialRoute(a.p)).toList();
 
 //Hiện giờ chưa hoạt động vì chưa có phần tử
@@ -29,7 +29,7 @@ class AuthMiddleWare extends GetMiddleware {
       Get.offAllNamed(
         Routes.login.p,
         parameters: {
-          'redirect': route ?? Routes.main.p,
+          'redirect': route ?? Routes.home.p,
         },
       );
     });

@@ -1,5 +1,6 @@
 import 'package:ecomercy_app_flutter/views/login/login_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -104,7 +105,7 @@ class LoginController extends GetxController {
       // await Utils.saveImageInStorage(userCredential.user?.photoURL ?? "");
       // printLog('mProfileImg :===> $mProfileImg');
 
-      Get.offAllNamed(Routes.products.sp);
+      Get.offAllNamed(Routes.main.sp);
     } on FirebaseAuthException catch (e) {
       print('===>Exp${e.code.toString()}');
       print('===>Exp${e.message.toString()}');
@@ -138,6 +139,10 @@ class LoginController extends GetxController {
     state.isObscure.value = !state.isObscure.value;
   }
 
+  void getToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    print("FCM Token: $token");
+  }
 
 
 }

@@ -1,4 +1,4 @@
-import 'package:ecomercy_app_flutter/configs/styles/theme.dart';
+import 'package:ecomercy_app_flutter/configs/styles/themes/themes.dart';
 import 'package:ecomercy_app_flutter/views/blog/blog_logic.dart';
 import 'package:ecomercy_app_flutter/widgets/Scaffold/primary_scaffold.dart';
 import 'package:ecomercy_app_flutter/widgets/Text/primary_text.dart';
@@ -34,9 +34,11 @@ class BlogsView extends StatelessWidget {
                         ElevatedButton(
                           onPressed: logic.toggleListView,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                           ),
-                          child: logic.state.isListView.value ? Icon(Icons.grid_view_rounded) : Icon(Icons.list_alt),
+                          child: logic.state.isListView.value
+                              ? Icon(Icons.grid_view_rounded, color: Theme.of(context).colorScheme.onPrimary)
+                              : Icon(Icons.list_alt, color: Theme.of(context).colorScheme.onPrimary,),
                         ),
                       ],
                     ),
@@ -45,7 +47,7 @@ class BlogsView extends StatelessWidget {
                       child: Container(
                         width: 280, // Điều chỉnh chiều dài của thanh gạch
                         height: 1,
-                        color: Colors.grey,
+                        color: Theme.of(context).colorScheme.onSurface,
                         margin:
                             EdgeInsets.only(top: 8), // Cách lề trên một chút
                       ),
@@ -66,13 +68,13 @@ class BlogsView extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             margin: EdgeInsets.only(left: 20),
                             decoration: BoxDecoration(
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.primary,
                               borderRadius: BorderRadius.circular(25),
                             ),
                             child: Center(
                                 child: PrimaryText(
                               category["name"],
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.onPrimary,
                             )),
                           );
                         },
@@ -173,18 +175,25 @@ class BlogsView extends StatelessWidget {
                                                               horizontal: 8,
                                                               vertical: 8),
                                                       decoration: BoxDecoration(
-                                                        color: Colors.white,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(25),
                                                         border: Border.all(
-                                                            color: Colors.grey,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onPrimary,
                                                             width: 1),
                                                       ),
                                                       child: Text("#$tag",
                                                           style: TextStyle(
-                                                              color:
-                                                                  Colors.grey,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .onPrimary,
                                                               fontSize: 11)),
                                                     );
                                                   }).toList(), // Chuyển map về dạng List<Widget>
@@ -192,7 +201,7 @@ class BlogsView extends StatelessWidget {
                                               ),
                                               PrimaryText(
                                                 "Yesterday",
-                                                color: Colors.grey,
+                                                color: ThemeConfigs.textSecondary(context),
                                                 fontSize: 14,
                                               )
                                             ],
@@ -224,29 +233,28 @@ class BlogsView extends StatelessWidget {
                                                         ],
                                                         begin:
                                                             Alignment.topLeft,
-                                                        end: Alignment.bottomRight),
+                                                        end: Alignment
+                                                            .bottomRight),
                                                     border: Border.all(
                                                       width: 3,
                                                       color: Colors.transparent,
                                                     ),
                                                     borderRadius:
-                                                    BorderRadius.only(
-                                                        topRight: Radius
-                                                            .circular(
-                                                            15),
-                                                        bottomLeft: Radius
-                                                            .circular(
-                                                            10)),
+                                                        BorderRadius.only(
+                                                            topRight: Radius
+                                                                .circular(15),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10)),
                                                   ),
                                                   child: ClipRRect(
                                                     borderRadius:
-                                                    BorderRadius.only(
-                                                        topRight: Radius
-                                                            .circular(
-                                                            15),
-                                                        bottomLeft: Radius
-                                                            .circular(
-                                                            10)),
+                                                        BorderRadius.only(
+                                                            topRight: Radius
+                                                                .circular(15),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10)),
                                                     child: Image.network(
                                                       blog["coverImage"],
                                                       fit: BoxFit.cover,
@@ -262,8 +270,7 @@ class BlogsView extends StatelessWidget {
                                                 width: 172,
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
+                                                      CrossAxisAlignment.start,
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceAround,
@@ -315,35 +322,51 @@ class BlogsView extends StatelessWidget {
                       alignment: Alignment.center,
                       child: SizedBox(
                         width: 250,
-                        child: logic.state.isLoadmore.value ?
-                        Center(
-                          child: Lottie.asset('assets/animations/load_more.json',
-                              width: 150, height: 150),
-                        ) :
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero,
-                                side: BorderSide(color: Colors.grey, width: 1),
-                              ),
-                            ),
-                            onPressed: logic.loadMore,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                PrimaryText(
-                                  "LOAD MORE",
-                                  fontSize: 18,
+                        child: logic.state.isLoadmore.value
+                            ? Center(
+                                child: Lottie.asset(
+                                    'assets/animations/load_more.json',
+                                    width: 150,
+                                    height: 150),
+                              )
+                            : ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Theme.of(
+                                      context)
+                                      .colorScheme
+                                      .primary,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 25, vertical: 15),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                    side: BorderSide(
+                                        color: Theme.of(
+                                            context)
+                                            .colorScheme
+                                            .onPrimary, width: 1),
+                                  ),
                                 ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Icon(Icons.add),
-                              ],
-                            )),
+                                onPressed: logic.loadMore,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    PrimaryText(
+                                      "LOAD MORE",
+                                      fontSize: 18,
+                                      color: Theme.of(
+                                          context)
+                                          .colorScheme
+                                          .onPrimary,
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Icon(Icons.add, color: Theme.of(
+                                        context)
+                                        .colorScheme
+                                        .onPrimary,),
+                                  ],
+                                )),
                       ),
                     ),
                     SizedBox(
@@ -354,7 +377,10 @@ class BlogsView extends StatelessWidget {
                       child: Container(
                         width: 200, // Điều chỉnh chiều dài của thanh gạch
                         height: 1,
-                        color: Colors.grey,
+                        color: Theme.of(
+                            context)
+                            .colorScheme
+                            .onSurface,
                         margin:
                             EdgeInsets.only(top: 8), // Cách lề trên một chút
                       ),

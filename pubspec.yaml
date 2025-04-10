@@ -50,6 +50,19 @@ dependencies:
   shimmer: ^3.0.0
   font_awesome_flutter: ^10.8.0
   pinput: ^3.0.1
+  app_links: ^6.4.0
+  flutter_local_notifications: ^19.0.0
+  permission_handler: ^11.4.0
+  firebase_messaging: ^15.2.5
+  firebase_analytics: ^11.4.5
+  convex_bottom_bar: ^3.2.0
+  video_player: ^2.9.5
+  url_launcher: ^6.3.1
+  adaptive_theme: ^3.6.0
+  intl: ^0.19.0
+  flutter_localizations:
+    sdk: flutter
+
 
 
 dependency_overrides:
@@ -59,6 +72,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
+  intl_utils: ^2.8.10
 
 flutter_launcher_icons:
   android: true
@@ -82,10 +96,12 @@ flutter:
   assets:
     - assets/
     - assets/animations/
+    - assets/logo/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:

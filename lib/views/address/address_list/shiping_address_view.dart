@@ -1,3 +1,4 @@
+import 'package:ecomercy_app_flutter/configs/styles/themes/themes.dart';
 import 'package:ecomercy_app_flutter/views/checkout/checkout_logic.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class ShippingAddressView extends StatelessWidget {
                       width: double.infinity,
                       // Điều chỉnh chiều dài của thanh gạch
                       height: 1,
-                      color: Colors.grey,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       margin: EdgeInsets.only(bottom: 5),
                     ),
                   ),
@@ -92,7 +93,7 @@ class ShippingAddressView extends StatelessWidget {
                                                         .value ==
                                                     index
                                                 ? Colors.green
-                                                : Colors.grey,
+                                                : ThemeConfigs.textSecondary(context),
                                             width: 2,
                                           ),
                                         ),
@@ -133,7 +134,7 @@ class ShippingAddressView extends StatelessWidget {
                                                 PrimaryText(
                                                   " | ${address.phone}",
                                                   fontSize: 10,
-                                                  color: Colors.grey,
+                                                  color: ThemeConfigs.textSecondary(context),
                                                 ),
                                               ],
                                             ),
@@ -170,7 +171,7 @@ class ShippingAddressView extends StatelessWidget {
                                           padding: EdgeInsets.zero),
                                       child: PrimaryText(
                                         "Sửa",
-                                        color: Color(0xFF3E5879),
+                                        color: Theme.of(context).colorScheme.onPrimary,
                                       )),
                                 ],
                               ),

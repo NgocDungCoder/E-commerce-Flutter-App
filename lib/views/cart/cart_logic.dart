@@ -26,7 +26,7 @@ class CartLogic extends GetxController {
       List cartProducts = await _productService.getCartOfUser(userId);
       if (cartProducts.isNotEmpty) {
 
-        await Future.wait(cartProducts.map((product) async {}));
+        // await Future.wait(cartProducts.map((product) async {}));
         state.productsOfCart.clear();
         state.productsOfCart.addAll(cartProducts);
         print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
@@ -34,31 +34,61 @@ class CartLogic extends GetxController {
         updateCartItemCount();
 
         print(state.itemCount.value);
-        getCartDetail();
+        await getCartDetail();
         state.isLoading.value = false;
         state.isIndicatorLoding.value = false;
       }
     }
   }
 
-  void getCartDetail() async {
+  Future<void> getCartDetail() async {
     List cartItems = state.productsOfCart;
     try {
-      for (var item in cartItems) {
-        String productId = item['productID'];
-        int quantity = item['quantity'];
-        String cartID = item['cartID'];
-        Map<String, dynamic>? productData =
-            await _productService.getProductById(productId);
-        if (productData != null) {
+      // Load tất cả products song song
+      final productsData = await Future.wait(cartItems.map((item) async {
+        try {
+          final productId = item['productID'];
+          final quantity = item['quantity'];
+          String cartID = item['cartID'];
+
+          final productData = await _productService.getProductById(productId);
+
+          if (productData == null) return {}; // Skip nếu null
           productData['quantity'] = quantity;
           productData['cardID'] = cartID;
-          state.subTotal += productData['price'] * quantity;
-          state.productsDetail.add(productData);
+
+          // Check ảnh có load được không
+          try {
+            final imageProvider = NetworkImage(productData['image']);
+            final completer = Completer<void>();
+
+            imageProvider.resolve(const ImageConfiguration()).addListener(
+              ImageStreamListener(
+                    (imageInfo, _) => completer.complete(),
+                onError: (error, stackTrace) {
+                  print("⚠️ Lỗi tải ảnh: $error");
+                  completer.complete();
+                },
+              ),
+            );
+            state.subTotal += productData['price'] * quantity;
+            await completer.future;
+          } catch (e) {
+            print("⚠️ Lỗi khi xử lý ảnh: $e");
+          }
+          return productData;
+        } catch (e) {
+          print('⚠️ Lỗi khi xử lý product: $e');
+          return {}; // Return rỗng nếu có lỗi
         }
-      }
+      }));
+
+      // Lọc bỏ data rỗng (nếu có product bị lỗi)
+      state.productsDetail.addAll(productsData.where((e) => e.isNotEmpty));
+
+      print("🔥 Danh sách product detail: ${state.productsDetail}");
     } catch (e) {
-      print('Lỗi khi lấy sản phẩm: $e');
+      print('❌ Lỗi khi lấy sản phẩm: $e');
     }
   }
 

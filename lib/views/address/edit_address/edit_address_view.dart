@@ -3,14 +3,13 @@ import 'package:ecomercy_app_flutter/utils/custom_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../models/address_model.dart';
 import '../../../widgets/Text/primary_text.dart';
 import 'edit_address_logic.dart';
 
 class EditAddressBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<EditAddressLogic>(EditAddressLogic());
+    Get.lazyPut<EditAddressLogic>(() => EditAddressLogic());
   }
 }
 
@@ -18,7 +17,15 @@ class EditAddressView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Chỉnh sửa địa chỉ")),
+      appBar: AppBar(title: PrimaryText("Chỉnh sửa địa chỉ", color: Colors.white,), backgroundColor: Colors.black, leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back_ios,
+        ),
+        color: Colors.white,
+        onPressed: () {
+          Get.back();
+        },
+      ),),
       body: GetX<EditAddressLogic>(builder: (logic) {
         return Padding(
           padding: EdgeInsets.all(16),
@@ -40,7 +47,7 @@ class EditAddressView extends StatelessWidget {
                   width: double.infinity,
                   // Điều chỉnh chiều dài của thanh gạch
                   height: 1,
-                  color: Colors.grey,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   margin: EdgeInsets.only(bottom: 5),
                 ),
               ),
@@ -48,14 +55,14 @@ class EditAddressView extends StatelessWidget {
                 height: 15,
               ),
               TextField(
-                cursorColor: Colors.black,
+                cursorColor: Theme.of(context).colorScheme.onPrimary,
                 decoration: InputDecoration(
                   labelText: "Họ và tên",
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 16),
-                  hintStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
+                  hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -68,19 +75,19 @@ class EditAddressView extends StatelessWidget {
                 controller: logic.nameController,
                 style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     decoration: TextDecoration.none),
               ),
               SizedBox(height: 20),
               TextField(
-                cursorColor: Colors.black,
+                cursorColor: Theme.of(context).colorScheme.onPrimary,
                 decoration: InputDecoration(
                   labelText: "Số điện thoại",
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 16),
-                  hintStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
+                  hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -93,18 +100,18 @@ class EditAddressView extends StatelessWidget {
                 textInputAction: TextInputAction.next,
                 style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     decoration: TextDecoration.none),
               ),
               SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: "Tỉnh/Thành phố",
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 16),
-                  hintStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
+                  hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -124,14 +131,14 @@ class EditAddressView extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TextField(
-                cursorColor: Colors.black,
+                cursorColor: Theme.of(context).colorScheme.onPrimary,
                 decoration: InputDecoration(
                   labelText: "Tên đường, số nhà",
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 16),
-                  hintStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
+                  hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -144,7 +151,7 @@ class EditAddressView extends StatelessWidget {
                 textInputAction: TextInputAction.next,
                 style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     decoration: TextDecoration.none),
               ),
               SizedBox(height: 20),

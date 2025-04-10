@@ -70,4 +70,13 @@ class StorageService extends GetxService implements IStorage {
       return Future.error(error);
     }
   }
+
+  Future<bool> setIsDarkMode(bool value) async {
+    await _storage.write(StorageKey.isDarkMode, value);
+    return true;
+  }
+
+  Future<bool> getIsDarkMode() async {
+    return _storage.read(StorageKey.isDarkMode) ?? false;
+  }
 }

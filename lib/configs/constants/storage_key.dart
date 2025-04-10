@@ -9,4 +9,5 @@ class StorageKey {
   static const deepLinkRef = 'deep_link_ref';
   static const streamKey = '_stream_key';
   static const favorites = '_favorites';
+  static const isDarkMode = 'isDarkMode';
 }

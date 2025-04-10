@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../configs/styles/theme.dart';
+import '../../configs/styles/themes/themes.dart';
 import '../../routes/route.dart';
 import '../../widgets/Text/primary_text.dart';
 
@@ -60,7 +60,7 @@ class CheckoutView extends StatelessWidget {
                               width: 190,
                               // Điều chỉnh chiều dài của thanh gạch
                               height: 1,
-                              color: Colors.grey,
+                              color: Theme.of(context).colorScheme.onSurface,
                               margin: EdgeInsets.only(bottom: 15),
                             ),
                           ),
@@ -72,7 +72,7 @@ class CheckoutView extends StatelessWidget {
                               fontSize: 16,
                               letterSpacing: 1.5,
                               fontWeight: FontWeight.w400,
-                              color: Colors.grey,
+                              color: Color(0xFFBCCCDC),
                             )),
                         GestureDetector(
                           onTap: () {
@@ -85,32 +85,58 @@ class CheckoutView extends StatelessWidget {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      PrimaryText(
-                                        logic
-                                            .state.addresses[logic.state.selectedAddress.value].name,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16,
-                                      ),
-                                      PrimaryText(
-                                        logic.state.addresses[logic.state.selectedAddress.value].street,
-                                        fontWeight: FontWeight.w300,
-                                        color: Color(0xFF3E5879),
-                                      ),
-                                      PrimaryText(
-                                        logic.state.addresses[logic.state.selectedAddress.value].district,
-                                        fontWeight: FontWeight.w300,
-                                        color: Color(0xFF3E5879),
-                                      ),
-                                      PrimaryText(
-                                          logic.state.addresses[logic.state.selectedAddress.value].phone,
-                                          fontWeight: FontWeight.w300,
-                                          color: Color(0xFF3E5879)),
-                                    ],
-                                  ),
+                                  child: logic.state.addresses.isEmpty
+                                      ? Container(
+                                          child: PrimaryText(
+                                              "Thêm địa chỉ giao hàng mới"),
+                                        )
+                                      : Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            PrimaryText(
+                                              logic
+                                                  .state
+                                                  .addresses[logic.state
+                                                      .selectedAddress.value]
+                                                  .name,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16,
+                                            ),
+                                            PrimaryText(
+                                              logic
+                                                  .state
+                                                  .addresses[logic.state
+                                                      .selectedAddress.value]
+                                                  .street,
+                                              fontWeight: FontWeight.w300,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface,
+                                            ),
+                                            PrimaryText(
+                                              logic
+                                                  .state
+                                                  .addresses[logic.state
+                                                      .selectedAddress.value]
+                                                  .district,
+                                              fontWeight: FontWeight.w300,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface,
+                                            ),
+                                            PrimaryText(
+                                                logic
+                                                    .state
+                                                    .addresses[logic.state
+                                                        .selectedAddress.value]
+                                                    .phone,
+                                                fontWeight: FontWeight.w300,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurface),
+                                          ],
+                                        ),
                                 ),
                                 Icon(Icons.keyboard_arrow_right)
                               ],
@@ -126,7 +152,7 @@ class CheckoutView extends StatelessWidget {
                             width: double.infinity,
                             // Điều chỉnh chiều dài của thanh gạch
                             height: 1,
-                            color: Colors.grey,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                         ListView.builder(
@@ -187,7 +213,7 @@ class CheckoutView extends StatelessWidget {
                                                       vertical: 4),
                                                   decoration:
                                                       const BoxDecoration(
-                                                    color: ThemeConfigs.redText,
+                                                    color: Colors.pink,
                                                     borderRadius:
                                                         BorderRadius.only(
                                                       topRight:
@@ -284,7 +310,7 @@ class CheckoutView extends StatelessWidget {
                             width: double.infinity,
                             // Điều chỉnh chiều dài của thanh gạch
                             height: 1,
-                            color: Colors.grey,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                         SizedBox(
@@ -311,7 +337,7 @@ class CheckoutView extends StatelessWidget {
                             width: double.infinity,
                             // Điều chỉnh chiều dài của thanh gạch
                             height: 1,
-                            color: Colors.grey,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                         Container(
@@ -345,7 +371,7 @@ class CheckoutView extends StatelessWidget {
                             width: double.infinity,
                             // Điều chỉnh chiều dài của thanh gạch
                             height: 1,
-                            color: Colors.grey,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                         Container(
@@ -375,7 +401,9 @@ class CheckoutView extends StatelessWidget {
                                       Spacer(),
                                       PrimaryText(
                                         "Free",
-                                        color: Color(0xFF3E5879),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface,
                                       ),
                                       SizedBox(
                                         width: 25,
@@ -393,7 +421,7 @@ class CheckoutView extends StatelessWidget {
                             width: double.infinity,
                             // Điều chỉnh chiều dài của thanh gạch
                             height: 1,
-                            color: Colors.grey,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                         SizedBox(
@@ -406,7 +434,7 @@ class CheckoutView extends StatelessWidget {
                             fontSize: 16,
                             letterSpacing: 1.5,
                             fontWeight: FontWeight.w400,
-                            color: Colors.grey,
+                            color: Color(0xFFBCCCDC),
                           ),
                         ),
                         Column(
@@ -442,14 +470,11 @@ class CheckoutView extends StatelessWidget {
                                               SizedBox(
                                                 width: 8,
                                               ),
-                                              Text(
+                                              PrimaryText(
                                                 logic.state
                                                     .paymentMethods[index],
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                ),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w400,
                                               ),
                                             ],
                                           ),
@@ -459,17 +484,18 @@ class CheckoutView extends StatelessWidget {
                                             height: 25,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              color:
-                                                  logic.state.defaultValue ==
-                                                          value
-                                                      ? Colors.green
-                                                      : Colors.transparent,
-                                              border: logic.state
-                                                          .defaultValue ==
+                                              color: logic.state.defaultValue ==
+                                                      value
+                                                  ? Colors.green
+                                                  : Colors.transparent,
+                                              border: logic
+                                                          .state.defaultValue ==
                                                       value
                                                   ? null // Xóa border khi được chọn
                                                   : Border.all(
-                                                      color: Colors.grey,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onSurface,
                                                       width: 2),
                                             ),
                                             child: logic.state.defaultValue ==
@@ -492,7 +518,9 @@ class CheckoutView extends StatelessWidget {
                                               width: 340,
                                               // Điều chỉnh chiều dài của thanh gạch
                                               height: 0.3,
-                                              color: Colors.grey,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface,
                                             ),
                                           )
                                         : Align(
@@ -502,7 +530,9 @@ class CheckoutView extends StatelessWidget {
                                               width: double.infinity,
                                               // Điều chỉnh chiều dài của thanh gạch
                                               height: 1,
-                                              color: Colors.grey,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface,
                                             ),
                                           )
                                   ],
@@ -521,7 +551,7 @@ class CheckoutView extends StatelessWidget {
                             fontSize: 16,
                             letterSpacing: 1.5,
                             fontWeight: FontWeight.w400,
-                            color: Colors.grey,
+                            color: Color(0xFFBCCCDC),
                           ),
                         ),
                         SizedBox(
@@ -563,7 +593,7 @@ class CheckoutView extends StatelessWidget {
                             PrimaryText(
                               "đxxxxxx",
                               fontSize: 14,
-                              color: Colors.red,
+                              color: Colors.pink,
                             ),
                           ],
                         ),
@@ -588,7 +618,7 @@ class CheckoutView extends StatelessWidget {
                             PrimaryText(
                               "đ${logic.cartLogic.state.subTotal}",
                               fontSize: 14,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.onSurface,
                               fontWeight: FontWeight.bold,
                             ),
                           ],
@@ -608,7 +638,7 @@ class CheckoutView extends StatelessWidget {
                                 TextSpan(
                                   text: 'Điều khoản',
                                   style: TextStyle(
-                                      color: Colors.red,
+                                      color: Colors.pink,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -683,14 +713,23 @@ class CheckoutView extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
-                                  onPressed: () {
-                                    logic.loadAddresses();
+                                  onPressed: () async {
+                                    await logic
+                                        .addNewOrder("zYhe1dcYsDcr4qGcwKWg");
+                                    print("id trong view:");
+                                    print(logic.state.orderId);
+                                    Get.offNamed(Routes.successPayment.p,
+                                        arguments: logic.state.orderId);
                                   },
-                                  child: PrimaryText(
-                                    'Đặt hàng',
-                                    color: ThemeConfigs.whiteText,
-                                    fontSize: 15,
-                                  )),
+                                  child: logic.state.isLoadingPayment.value
+                                      ? Lottie.asset(
+                                          'assets/animations/load_more.json', height: 20,
+                                        )
+                                      : PrimaryText(
+                                          'Đặt hàng',
+                                          color: ThemeConfigs.whiteText,
+                                          fontSize: 15,
+                                        )),
                             ),
                           ],
                         ),

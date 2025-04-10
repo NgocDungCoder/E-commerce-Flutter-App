@@ -1,11 +1,12 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:ecomercy_app_flutter/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../routes/route.dart';
+import '../../services/theme_service.dart';
 import '../Text/primary_text.dart';
 
 class Footer extends StatelessWidget {
-  final ProductService blog = ProductService();
   @override
   Widget build(context) {
     return Column(
@@ -16,7 +17,7 @@ class Footer extends StatelessWidget {
           child: Container(
             width: 200, // Điều chỉnh chiều dài của thanh gạch
             height: 1,
-            color: Colors.grey,
+            color: Theme.of(context).colorScheme.onSurface,
             margin: EdgeInsets.only(top: 8), // Cách lề trên một chút
           ),
         ),
@@ -26,10 +27,13 @@ class Footer extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            PrimaryText(
-              'Tìm hiểu',
-              fontWeight: FontWeight.w400,
-              fontSize: 22,
+            TextButton(
+              onPressed: () {  },
+              child: PrimaryText(
+                'Tìm hiểu',
+                fontWeight: FontWeight.w400,
+                fontSize: 22,
+              ),
             ),
             TextButton(
               onPressed: (){},

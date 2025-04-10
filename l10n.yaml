@@ -1,0 +1,7 @@
+arb-dir: lib/l10n
+template-arb-file: intl_en.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+
+#thêm thì phải chạy lại lệnh này
+#dart run intl_utils:generate

@@ -6,7 +6,7 @@ import '../../../widgets/Text/primary_text.dart';
 class AddAddressBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<AddAddressLogic>(AddAddressLogic());
+    Get.lazyPut<AddAddressLogic>(() => AddAddressLogic());
   }
 }
 
@@ -51,7 +51,7 @@ class AddAddressView extends StatelessWidget {
                   width: double.infinity,
                   // Điều chỉnh chiều dài của thanh gạch
                   height: 1,
-                  color: Colors.grey,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   margin: EdgeInsets.only(bottom: 5),
                 ),
               ),
@@ -59,14 +59,14 @@ class AddAddressView extends StatelessWidget {
                 height: 15,
               ),
               TextField(
-                cursorColor: Colors.black,
+                cursorColor:Theme.of(context).colorScheme.onPrimary,
                 decoration: InputDecoration(
                   labelText: "Họ và tên",
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 16),
-                  hintStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
+                  hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -78,19 +78,19 @@ class AddAddressView extends StatelessWidget {
                 textInputAction: TextInputAction.next,
                 style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     decoration: TextDecoration.none),
               ),
               SizedBox(height: 20),
               TextField(
-                cursorColor: Colors.black,
+                cursorColor: Theme.of(context).colorScheme.onPrimary,
                 decoration: InputDecoration(
                   labelText: "Số điện thoại",
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 16),
-                  hintStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
+                  hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -102,18 +102,18 @@ class AddAddressView extends StatelessWidget {
                 textInputAction: TextInputAction.next,
                 style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     decoration: TextDecoration.none),
               ),
               SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   labelText: "Tỉnh/Thành phố",
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 16),
-                  hintStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
+                  hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -133,14 +133,14 @@ class AddAddressView extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TextField(
-                cursorColor: Colors.black,
+                cursorColor: Theme.of(context).colorScheme.onPrimary,
                 decoration: InputDecoration(
                   labelText: "Tên đường, số nhà",
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 16),
-                  hintStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 16),
+                  hintStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -152,7 +152,7 @@ class AddAddressView extends StatelessWidget {
                 textInputAction: TextInputAction.next,
                 style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     decoration: TextDecoration.none),
               ),
               SizedBox(height: 20),
@@ -166,12 +166,12 @@ class AddAddressView extends StatelessWidget {
                       logic.toggleDefault(value);
                     },
                     activeColor: Colors.orange,
-                    inactiveThumbColor: Colors.yellow,
+                    inactiveThumbColor: Colors.orange,
                     // Màu của nút khi tắt
 
                     inactiveTrackColor: Colors.black12,
                     // Màu của đường khi tắt
-                    activeTrackColor: Colors.yellow,
+                    activeTrackColor: Colors.white,
                     // Màu của đường khi bật
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),

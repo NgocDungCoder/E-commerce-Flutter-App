@@ -1,0 +1,12 @@
+# Thư mục build
+build/
+.android/
+.ios/
+
+# Thư viện cài đặt
+pubspec.lock
+
+# User-specific
+.DS_Store
+.idea/
+*.iml

@@ -108,3 +108,20 @@ extension OrderStatusExtension on OrderStatus {
     }
   }
 }
+
+extension OrderStatusParser on String {
+  OrderStatus toOrderStatus() {
+    switch (this.toLowerCase()) {
+      case 'pendingconfirmation':
+        return OrderStatus.pendingConfirmation;
+      case 'pendingshipment':
+        return OrderStatus.pendingShipment;
+      case 'delivering':
+        return OrderStatus.delivering;
+      case 'delivered':
+        return OrderStatus.delivered;
+      default:
+        return OrderStatus.pendingConfirmation; // fallback nếu không khớp
+    }
+  }
+}

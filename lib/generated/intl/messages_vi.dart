@@ -148,7 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Địa chỉ giao hàng",
     ),
     "shippingDiscount": MessageLookupByLibrary.simpleMessage(
-      "Giảm giá phí vận chuyển",
+      "Giảm giá voucher",
     ),
     "shippingFee": MessageLookupByLibrary.simpleMessage(
       "Tổng tiền phí vận chuyển",

@@ -650,10 +650,10 @@ class S {
     );
   }
 
-  /// `Shipping discount`
+  /// `Voucher discount`
   String get shippingDiscount {
     return Intl.message(
-      'Shipping discount',
+      'Voucher discount',
       name: 'shippingDiscount',
       desc: '',
       args: [],

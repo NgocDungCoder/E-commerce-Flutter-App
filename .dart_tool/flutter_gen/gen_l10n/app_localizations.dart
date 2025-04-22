@@ -620,7 +620,7 @@ abstract class AppLocalizations {
   /// No description provided for @shippingDiscount.
   ///
   /// In en, this message translates to:
-  /// **'Shipping discount'**
+  /// **'Voucher discount'**
   String get shippingDiscount;
 
   /// No description provided for @totalPayment.

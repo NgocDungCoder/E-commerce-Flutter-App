@@ -65,6 +65,11 @@ class OrderView extends StatelessWidget {
                     },
                     itemBuilder: (context, index) {
                       final orders = logic.state.categorizedOrders[index] ?? [];
+                      for (var order in orders) {
+                        if (!logic.state.showAllMap.containsKey(order.id)) {
+                          logic.state.showAllMap[order.id] = false.obs;
+                        }
+                      }
                       return orders.isNotEmpty
                           ? GestureDetector(
                               onTap: () {
@@ -185,6 +190,10 @@ class _OrderItem extends StatelessWidget {
       final products = logic.state.orderProducts[order.id] ?? [];
       double subTotal = order.totalAmount.toDouble();
       OrderStatus status = order.status;
+      final showAll = logic.state.showAllMap[order.id] ?? false.obs;
+      final itemsToShow = products.length > 1 && !showAll.value
+          ? [products.first]
+          : products;
       return Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         margin: EdgeInsets.only(bottom: 10),
@@ -192,113 +201,141 @@ class _OrderItem extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                PrimaryText(
-                  "Ubuyee",
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-                PrimaryText(
-                  status.toVietnamese(),
-                  fontSize: 14,
-                  color: Colors.pink,
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            products.isNotEmpty
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      final product = products[index];
-                      double price = product['price'].toDouble();
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 0.5,
-                                color: Theme.of(context).colorScheme.onPrimary,
+        child: AnimatedSize(
+          duration: Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  PrimaryText(
+                    "Ubuyee",
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  PrimaryText(
+                    status.toVietnamese(),
+                    fontSize: 14,
+                    color: Colors.pink,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              products.isNotEmpty
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: itemsToShow.length,
+                      itemBuilder: (context, index) {
+                        final product =
+                            itemsToShow[index]; // đổi từ products -> itemsToShow
+                        double price = product['price'].toDouble();
+
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 0.5,
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                ),
+                              ),
+                              child: Image.network(
+                                product['image'],
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            child: Image.network(
-                              product['image'],
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                PrimaryText(
-                                  product['name'],
-                                  fontSize: 13,
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    PrimaryText(
-                                      'XL',
-                                      fontSize: 12,
-                                      color:
-                                          ThemeConfigs.textSecondary(context),
-                                    ),
-                                    PrimaryText("x${product['quantity']}",
-                                        fontSize: 12,
-                                        color: ThemeConfigs.textSecondary(
-                                            context)),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: PrimaryText(
-                                    price.toCurrency(),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  PrimaryText(
+                                    product['name'],
                                     fontSize: 13,
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      PrimaryText(
+                                        'L',
+                                        fontSize: 12,
+                                        color:
+                                            ThemeConfigs.textSecondary(context),
+                                      ),
+                                      PrimaryText("x${product['quantity']}",
+                                          fontSize: 12,
+                                          color: ThemeConfigs.textSecondary(
+                                              context)),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: PrimaryText(
+                                      price.toCurrency(),
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                  )
-                : const Center(child: CircularProgressIndicator()),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Spacer(),
-                PrimaryText(
-                  "Tổng số tiền (${products.length} sản phẩm): ",
-                  fontSize: 13,
+                          ],
+                        );
+                      },
+                    )
+                  : const Center(child: CircularProgressIndicator()),
+              if (products.length > 1)
+                GestureDetector(
+                  onTap: () => showAll.toggle(),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    color: Colors.transparent,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PrimaryText(
+                          showAll.value
+                              ? "Thu gọn"
+                              : "Xem thêm (${products.length - 1})",
+                          fontSize: 13,
+                        ),
+                        Icon(showAll.value
+                            ? Icons.keyboard_arrow_up_outlined
+                            : Icons.keyboard_arrow_down_outlined),
+                      ],
+                    ),
+                  ),
                 ),
-                PrimaryText(
-                  subTotal.toCurrency(),
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold, // Làm đậm giá tiền
-                ),
-              ],
-            ),
-          ],
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Spacer(),
+                  PrimaryText(
+                    "Tổng số tiền (${products.length} sản phẩm): ",
+                    fontSize: 13,
+                  ),
+                  PrimaryText(
+                    subTotal.toCurrency(),
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold, // Làm đậm giá tiền
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       );
     });

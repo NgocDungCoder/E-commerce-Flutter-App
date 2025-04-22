@@ -10,6 +10,7 @@ import '../../../widgets/Text/primary_text.dart';
 class ShippingAddressView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Get.put(CheckoutLogic());
     return Scaffold(
       appBar: AppBar(
         title: PrimaryText(

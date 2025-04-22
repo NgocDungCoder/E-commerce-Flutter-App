@@ -1,13 +1,17 @@
 import 'package:ecomercy_app_flutter/models/order_model.dart';
 import 'package:ecomercy_app_flutter/models/order_product_model.dart';
+import 'package:ecomercy_app_flutter/routes/route.dart';
 import 'package:ecomercy_app_flutter/services/address_service.dart';
 import 'package:ecomercy_app_flutter/services/order_service.dart';
+import 'package:ecomercy_app_flutter/utils/format_price.dart';
 import 'package:ecomercy_app_flutter/utils/printLog.dart';
 import 'package:ecomercy_app_flutter/views/cart/cart_logic.dart';
 import 'package:ecomercy_app_flutter/views/checkout/checkout_state.dart';
+import 'package:ecomercy_app_flutter/views/voucher/voucher_view.dart';
 import 'package:get/get.dart';
 
 import '../../models/address_model.dart';
+import '../../models/voucher_model.dart';
 
 class CheckoutLogic extends GetxController {
   final CartLogic cartLogic = Get.find<CartLogic>();
@@ -72,8 +76,9 @@ class CheckoutLogic extends GetxController {
       final orderData = {
         'userId': uid,
         'items': orderItemsMap,
-        'totalAmount': cartLogic.state.subTotal.value,
+        'totalAmount': subTotalAfterDiscount(),
         'shippingAddress': address.toJson(),
+        'discount': discountPrice(),
         'paymentMethod': state.paymentMethods[state.defaultValue.value-1],
         'createdAt': DateTime.now().toString(),
         'status': OrderStatus.pendingConfirmation.toFirebaseString(),
@@ -88,4 +93,48 @@ class CheckoutLogic extends GetxController {
       }
     state.isLoadingPayment.value = false;
     }
+
+  void goToSelectVoucher() async {
+    // Truyền voucher và index vào argument
+    final result = await Get.toNamed(Routes.voucher.p, arguments: {
+      'voucher': state.voucher.value,
+      'index': state.selectedVoucher.value,
+    });
+
+    // Kiểm tra kết quả trả về từ màn hình chọn voucher
+    if (result != null && result is Map<String, dynamic>) {
+      final Voucher selectedVoucher = result['voucher'];
+      final int selectedIndex = result['index'];
+
+      // Cập nhật lại voucher và index trong màn hình thanh toán
+      state.voucher.value = selectedVoucher;
+      state.selectedVoucher.value = selectedIndex;
+      state.hasVoucher.value = true;
+
+      print("Voucher đã chọn: ${selectedVoucher.name}, Index: $selectedIndex");
+    } else {
+      state.hasVoucher.value = false;
+    }
   }
+
+  double discountPrice() {
+    double subTotal = cartLogic.state.subTotal.value.toDouble();
+    if(state.hasVoucher.value) {
+      subTotal = subTotal * state.voucher.value.discount/100;
+      return subTotal;
+    } else {
+      return 0;
+    }
+  }
+
+  double subTotalAfterDiscount() {
+    double subTotal = cartLogic.state.subTotal.value.toDouble();
+    if(state.hasVoucher.value) {
+      subTotal -= subTotal * state.voucher.value.discount/100;
+      return subTotal;
+    } else {
+      return subTotal;
+    }
+  }
+
+}

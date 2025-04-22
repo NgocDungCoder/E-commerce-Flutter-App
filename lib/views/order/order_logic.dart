@@ -14,14 +14,11 @@ class OrderLogic extends GetxController {
   final ScrollController scrollController = ScrollController();
   final ProductService _productService = ProductService();
 
-
-
   @override
   void onInit() async {
     super.onInit();
     pageController = PageController(initialPage: state.currentTabIndex.value);
     await fetchRandomProducts();
-    state.categorizedOrders = Get.arguments['orders'];
     state.currentTabIndex.value = Get.arguments['tabIndex'];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       pageController.animateToPage(
@@ -29,6 +26,19 @@ class OrderLogic extends GetxController {
         duration: const Duration(milliseconds: 400),
         curve: Curves.ease,
       );
+    });
+
+    final passedOrders = Get.arguments['orders'] as Map<int, List<OrderModel>>;
+    state.categorizedOrders.value = passedOrders;
+
+    // Tạo showAll riêng cho từng order.id
+    passedOrders.forEach((status, orders) {
+      for (var order in orders) {
+        state.showAllMap[order.id] = false.obs;
+        print("++++++++++++++++++++++++++++++++++++++++++++++");
+        print(state.showAllMap[order.id]);
+      }
+
     });
   }
 
@@ -42,10 +52,7 @@ class OrderLogic extends GetxController {
         fetchedProducts.add(product);
       }
     }
-    print("==================abc============================");
-    print(fetchedProducts);
     state.orderProducts[order.id] = fetchedProducts;
-
   }
 
   Future<void> fetchProductById(String productID) async {
@@ -59,19 +66,17 @@ class OrderLogic extends GetxController {
         final completer = Completer<void>();
 
         imageProvider.resolve(ImageConfiguration()).addListener(
-          ImageStreamListener(
+              ImageStreamListener(
                 (imageInfo, _) => completer.complete(),
-            onError: (error, stackTrace) {
-              print(
-                  "⚠️ Lỗi tải ảnh: $error"); // In lỗi nếu ảnh tải thất bại
-              completer.complete();
-            },
-          ),
-        );
+                onError: (error, stackTrace) {
+                  print(
+                      "⚠️ Lỗi tải ảnh: $error"); // In lỗi nếu ảnh tải thất bại
+                  completer.complete();
+                },
+              ),
+            );
         state.product.clear();
         state.product.addAll(newProducts);
-        print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-        print(state.product);
       }
     } catch (e) {
       print('Lỗi khi lấy dữ liệu: $e');
@@ -93,15 +98,15 @@ class OrderLogic extends GetxController {
           final completer = Completer<void>();
 
           imageProvider.resolve(ImageConfiguration()).addListener(
-            ImageStreamListener(
+                ImageStreamListener(
                   (imageInfo, _) => completer.complete(),
-              onError: (error, stackTrace) {
-                print(
-                    "⚠️ Lỗi tải ảnh: $error"); // In lỗi nếu ảnh tải thất bại
-                completer.complete();
-              },
-            ),
-          );
+                  onError: (error, stackTrace) {
+                    print(
+                        "⚠️ Lỗi tải ảnh: $error"); // In lỗi nếu ảnh tải thất bại
+                    completer.complete();
+                  },
+                ),
+              );
 
           await completer.future;
         }));
@@ -121,12 +126,12 @@ class OrderLogic extends GetxController {
     pageController.jumpToPage(index); // Chuyển tới page tương ứng
   }
 
-
-
   void animateToTab(int index, dynamic context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double tabWidth = MediaQuery.of(context).size.width * 0.3; // Giả sử mỗi tab rộng 100.0
-    double targetOffset = (index * tabWidth) - (screenWidth / 2) + (tabWidth / 2);
+    double tabWidth =
+        MediaQuery.of(context).size.width * 0.3; // Giả sử mỗi tab rộng 100.0
+    double targetOffset =
+        (index * tabWidth) - (screenWidth / 2) + (tabWidth / 2);
 
     scrollController.animateTo(
       targetOffset,

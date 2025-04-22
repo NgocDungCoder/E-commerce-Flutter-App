@@ -1,4 +1,5 @@
 import 'package:ecomercy_app_flutter/controllers/order_controller.dart';
+import 'package:ecomercy_app_flutter/controllers/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import '../exceptions/exception_handler.dart';
@@ -10,6 +11,7 @@ Future initControllers() async {
     await Get.putAsync(() => AuthController().init());
     Get.put(CartLogic()); // Khởi tạo controller cho toàn ứng dụng
     Get.put(OrderController());
+    Get.put(SearchLogic());
     //permanent: true
     // Giữ SnapshotController trong bộ nhớ vĩnh viễn (không bị xóa khi không còn sử dụng).
     //Dùng StreamController để quản lý dữ liệu từ Firestore

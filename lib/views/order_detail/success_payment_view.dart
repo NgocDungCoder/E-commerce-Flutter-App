@@ -77,7 +77,7 @@ class SuccessPaymentView extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Get.offNamed(Routes.orderDetail.p, arguments: orderID);
+                            Get.toNamed(Routes.orderDetail.p, arguments: orderID);
                           },
                           child: PrimaryText(
                             S.of(context).order,

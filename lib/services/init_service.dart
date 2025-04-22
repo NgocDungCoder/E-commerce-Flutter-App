@@ -7,6 +7,7 @@ import 'package:ecomercy_app_flutter/services/secure_storage_service.dart';
 import 'package:ecomercy_app_flutter/services/storage_service.dart';
 import 'package:ecomercy_app_flutter/services/theme_service.dart';
 import 'package:ecomercy_app_flutter/services/user_service.dart';
+import 'package:ecomercy_app_flutter/services/voucher_service.dart';
 import 'package:get/get.dart';
 
 import '../routes/middleware.dart';
@@ -18,6 +19,7 @@ Future initServices() async {
   Get.put(ConnectivityService());
   Get.put(ThemeService());
   Get.put(OrderService());
+  Get.put(VoucherService());
   Get.put(ProductService());
   Get.put(UserService());
   await Get.putAsync(() async => PhotoService());

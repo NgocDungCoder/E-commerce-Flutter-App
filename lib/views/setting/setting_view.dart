@@ -1,14 +1,11 @@
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:ecomercy_app_flutter/configs/styles/themes/themes.dart';
 import 'package:ecomercy_app_flutter/views/setting/setting_logic.dart';
 import 'package:ecomercy_app_flutter/widgets/Text/primary_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../generated/l10n.dart';
 import '../../routes/route.dart';
-import '../../services/language_service.dart';
 
 class SettingBinding extends Bindings {
   @override
@@ -78,25 +75,29 @@ class SettingView extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  PrimaryText(
-                    S.of(context).address,
-                    fontSize: 15,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 15,
+            GestureDetector(
+              onTap: () => Get.toNamed(Routes.shippingAddress.p),
+              child: Container(
+                color: Colors.transparent,
+                padding: EdgeInsets.only(left: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    PrimaryText(
+                      S.of(context).address,
+                      fontSize: 15,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
-                    padding: EdgeInsets.zero,
-                  ),
-                ],
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 15,
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                  ],
+                ),
               ),
             ),
             Align(
@@ -299,7 +300,8 @@ class SettingView extends StatelessWidget {
             ),
             GestureDetector(
               onTap: (){Get.toNamed(Routes.infor.p);},
-              child: Padding(
+              child: Container(
+                color: Colors.transparent,
                 padding: EdgeInsets.only(left: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

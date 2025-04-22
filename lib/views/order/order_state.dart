@@ -6,10 +6,12 @@ class OrderState {
   var currentTabIndex = 0.obs;
   var isLoading = false.obs;
   var product = <String, dynamic>{}.obs;
+  var showAll = false.obs;
   var products = <dynamic>[].obs; // Danh sách sản phẩm
+  var showAllMap = <String, RxBool>{}.obs;
   var orderProducts = <String, List<dynamic>>{}.obs;
 // key: orderId (hoặc unique id), value: danh sách sản phẩm trong order đó
-  late Map<int, List<OrderModel>> categorizedOrders;
+  var categorizedOrders = <int, List<OrderModel>>{}.obs;
 
   final List<String> tabs = [
     'Chờ xác nhận',

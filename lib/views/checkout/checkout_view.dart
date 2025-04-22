@@ -345,28 +345,37 @@ class CheckoutView extends StatelessWidget {
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
-                        Container(
-                          height: 70,
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Icon(
-                                  Icons.airplane_ticket_outlined,
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                PrimaryText(
-                                  S.of(context).addVoucher,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 18,
-                                ),
-                              ],
+                        GestureDetector(
+                          onTap: () => logic.goToSelectVoucher(),
+                          child: Container(
+                            height: 70,
+                            color: Colors.transparent,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  Icon(
+                                    Icons.airplane_ticket_outlined,
+                                    size: 30,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  PrimaryText(
+                                    logic.state.hasVoucher.value ? logic.state.voucher.value.name.toUpperCase() : S.of(context).addVoucher,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 15,
+                                  ),
+                                  PrimaryText(
+                                    logic.state.hasVoucher.value ? " - ${logic.state.voucher.value.description}" : "",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -401,7 +410,7 @@ class CheckoutView extends StatelessWidget {
                                       PrimaryText(
                                         S.of(context).shipping,
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 18,
+                                        fontSize: 15,
                                       ),
                                       Spacer(),
                                       PrimaryText(
@@ -409,6 +418,7 @@ class CheckoutView extends StatelessWidget {
                                         color: Theme.of(context)
                                             .colorScheme
                                             .onSurface,
+                                        fontSize: 15,
                                       ),
                                       SizedBox(
                                         width: 25,
@@ -583,7 +593,7 @@ class CheckoutView extends StatelessWidget {
                               fontSize: 14,
                             ),
                             PrimaryText(
-                              15000.0.toCurrency(),
+                              S.of(context).free,
                               fontSize: 14,
                             ),
                           ],
@@ -596,7 +606,7 @@ class CheckoutView extends StatelessWidget {
                               fontSize: 14,
                             ),
                             PrimaryText(
-                              15000.0.toCurrency(),
+                              logic.discountPrice().toCurrency(),
                               fontSize: 14,
                               color: Colors.pink,
                             ),
@@ -621,7 +631,7 @@ class CheckoutView extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             PrimaryText(
-                              subTotal.toCurrency(),
+                              logic.subTotalAfterDiscount().toCurrency(),
                               fontSize: 14,
                               color: Theme.of(context).colorScheme.onSurface,
                               fontWeight: FontWeight.bold,
@@ -662,7 +672,7 @@ class CheckoutView extends StatelessWidget {
                       child: Container(
                         height: 65,
                         width: double.infinity,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.primary,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -680,7 +690,7 @@ class CheckoutView extends StatelessWidget {
                                       width: 8,
                                     ),
                                     PrimaryText(
-                                      subTotal.toCurrency(),
+                                      logic.subTotalAfterDiscount().toCurrency(),
                                       fontSize: 15,
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,
@@ -697,7 +707,7 @@ class CheckoutView extends StatelessWidget {
                                       width: 8,
                                     ),
                                     PrimaryText(
-                                      30000.toCurrency(),
+                                      logic.discountPrice().toCurrency(),
                                       fontSize: 12,
                                       color: Colors.green,
                                     ),

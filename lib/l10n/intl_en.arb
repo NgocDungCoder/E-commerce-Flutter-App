@@ -87,7 +87,7 @@
   "creditDebitCard": "Credit/Debit card",
   "paymentDetail": "Payment details",
   "shippingFee": "Shipping fee total",
-  "shippingDiscount": "Shipping discount",
+  "shippingDiscount": "Voucher discount",
   "totalPayment": "Total payment",
   "saving": "Saving",
   "placeOrder": "Order",

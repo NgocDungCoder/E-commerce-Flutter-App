@@ -166,6 +166,10 @@ dbus
 2.17
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/dbus-0.7.11/
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/dbus-0.7.11/lib/
+diacritic
+3.0
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/diacritic-0.1.6/
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/diacritic-0.1.6/lib/
 dio
 2.18
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/dio-5.8.0+1/
@@ -490,6 +494,14 @@ package_config
 3.4
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/package_config-2.2.0/
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/package_config-2.2.0/lib/
+package_info_plus
+3.3
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus-8.3.0/
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus-8.3.0/lib/
+package_info_plus_platform_interface
+2.18
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus_platform_interface-3.2.0/
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/package_info_plus_platform_interface-3.2.0/lib/
 path
 3.0
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.9.0/
@@ -746,6 +758,10 @@ web
 3.4
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/web-1.1.1/
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/web-1.1.1/lib/
+win32
+3.5
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/win32-5.10.1/
+file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/win32-5.10.1/lib/
 xdg_directories
 3.3
 file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/xdg_directories-1.1.0/

@@ -132,7 +132,7 @@ class HomeView extends StatelessWidget {
                                     color: index ==
                                             logic.state.currentTabIndex.value
                                         ? Colors.pink
-                                        : Colors.black,
+                                        : Theme.of(context).colorScheme.onSurface,
                                     fontWeight: index ==
                                             logic.state.currentTabIndex.value
                                         ? FontWeight.bold
@@ -382,33 +382,37 @@ class HomeView extends StatelessWidget {
                       itemBuilder: (context, index) {
                         var product = logic.state.products[index];
                         double price = product['price'].toDouble();
-                        return SizedBox(
-                          width: 250,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AspectRatio(
-                                aspectRatio: 3 / 4,
-                                child: Image.network(
-                                  product['image'],
-                                  fit: BoxFit.cover,
+                        return GestureDetector(
+                          onTap: () => Get.toNamed(Routes.product_detail.p, arguments: product['id']),
+                          child: Container(
+                            color: Colors.transparent,
+                            width: 250,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AspectRatio(
+                                  aspectRatio: 3 / 4,
+                                  child: Image.network(
+                                    product['image'],
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 8),
-                              Center(
-                                child: PrimaryText(
-                                  product['name'],
-                                  maxLines: 2,
+                                SizedBox(height: 8),
+                                Center(
+                                  child: PrimaryText(
+                                    product['name'],
+                                    maxLines: 2,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 4),
-                              Center(
-                                child: PrimaryText(
-                                  price.toCurrency(),
-                                  color: Colors.pink,
+                                SizedBox(height: 4),
+                                Center(
+                                  child: PrimaryText(
+                                    price.toCurrency(),
+                                    color: Colors.pink,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       },

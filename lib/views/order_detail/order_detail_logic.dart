@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:intl/intl.dart';
-import 'package:flutter/services.dart';  // Đảm bảo bạn import thư viện này
+import 'package:flutter/services.dart'; // Đảm bảo bạn import thư viện này
 import 'package:ecomercy_app_flutter/services/order_service.dart';
 import 'package:ecomercy_app_flutter/services/product_service.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,6 @@ class OrderDetailLogic extends GetxController {
   final orderService = OrderService();
   final state = OrderDetailState();
   final _productService = ProductService();
-
 
   @override
   void onInit() async {
@@ -40,9 +39,8 @@ class OrderDetailLogic extends GetxController {
         getOrderDetail();
         state.isLoading.value = false;
         // state.isIndicatorLoding.value = false;
-        print('order đã tải về');
-        print(state.order);
         state.subToTal.value = state.order['totalAmount'].toDouble();
+        state.discount.value = state.order['discount'].toDouble();
       }
     } catch (e) {
       print('Lỗi khi lấy dữ liệu: $e');
@@ -52,47 +50,52 @@ class OrderDetailLogic extends GetxController {
     }
   }
 
-  //ko tối ưu bằng
-  // void getOrderDetail() async {
-  //   List orderItems = state.productsOfOrder;
-  //   try {
-  //     for (var item in orderItems) {
-  //       String productId = item['productID'];
-  //       int quantity = item['quantity'];
-  //       Map<String, dynamic>? productData =
-  //           await _productService.getProductById(productId);
-  //       if (productData != null) {
-  //         print("Trước");
-  //         print(state.productsDetail);
-  //         productData['quantity'] = quantity;
-  //         state.productsDetail.add(productData);
-  //         try {
-  //           final imageProvider = NetworkImage(productData['image']);
-  //           final completer = Completer<void>();
-  //
-  //           imageProvider.resolve(ImageConfiguration()).addListener(
-  //             ImageStreamListener(
-  //                   (imageInfo, _) => completer.complete(),
-  //               onError: (error, stackTrace) {
-  //                 print("⚠️ Lỗi tải ảnh: $error"); // In lỗi nếu ảnh tải thất bại
-  //                 completer.complete();
-  //               },
-  //             ),
-  //           );
-  //
-  //           await completer.future;
-  //         } catch (e) {
-  //           print("⚠️ Lỗi khi xử lý ảnh: $e");
-  //         }
-  //         print("Sau");
-  //         print(state.productsDetail);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     print('Lỗi khi lấy sản phẩm: $e');
-  //   }
-  //
-  // }
+  double subTotalBeforeDiscount() {
+    double subTotalBeforeDiscount = state.subToTal.value + state.discount.value;
+    return subTotalBeforeDiscount;
+  }
+
+//ko tối ưu bằng
+// void getOrderDetail() async {
+//   List orderItems = state.productsOfOrder;
+//   try {
+//     for (var item in orderItems) {
+//       String productId = item['productID'];
+//       int quantity = item['quantity'];
+//       Map<String, dynamic>? productData =
+//           await _productService.getProductById(productId);
+//       if (productData != null) {
+//         print("Trước");
+//         print(state.productsDetail);
+//         productData['quantity'] = quantity;
+//         state.productsDetail.add(productData);
+//         try {
+//           final imageProvider = NetworkImage(productData['image']);
+//           final completer = Completer<void>();
+//
+//           imageProvider.resolve(ImageConfiguration()).addListener(
+//             ImageStreamListener(
+//                   (imageInfo, _) => completer.complete(),
+//               onError: (error, stackTrace) {
+//                 print("⚠️ Lỗi tải ảnh: $error"); // In lỗi nếu ảnh tải thất bại
+//                 completer.complete();
+//               },
+//             ),
+//           );
+//
+//           await completer.future;
+//         } catch (e) {
+//           print("⚠️ Lỗi khi xử lý ảnh: $e");
+//         }
+//         print("Sau");
+//         print(state.productsDetail);
+//       }
+//     }
+//   } catch (e) {
+//     print('Lỗi khi lấy sản phẩm: $e');
+//   }
+//
+// }
   void getOrderDetail() async {
     final orderItems = state.productsOfOrder;
 
@@ -114,14 +117,14 @@ class OrderDetailLogic extends GetxController {
             final completer = Completer<void>();
 
             imageProvider.resolve(const ImageConfiguration()).addListener(
-              ImageStreamListener(
+                  ImageStreamListener(
                     (imageInfo, _) => completer.complete(),
-                onError: (error, stackTrace) {
-                  print("⚠️ Lỗi tải ảnh: $error");
-                  completer.complete();
-                },
-              ),
-            );
+                    onError: (error, stackTrace) {
+                      print("⚠️ Lỗi tải ảnh: $error");
+                      completer.complete();
+                    },
+                  ),
+                );
 
             await completer.future;
           } catch (e) {
@@ -146,7 +149,7 @@ class OrderDetailLogic extends GetxController {
 
   String formatDateTime(String dateTimeString) {
     final dateTime = DateTime.parse(dateTimeString);
-    return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
+    return DateFormat('dd-MM-yyyy HH:mm').format(dateTime);
   }
 
   void copyToClipboard(BuildContext context) {
@@ -155,7 +158,10 @@ class OrderDetailLogic extends GetxController {
 
     // Hiển thị thông báo xác nhận khi sao chép thành công
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Đã sao chép: ${state.orderID.value}'), duration: Duration(seconds: 1),),
+      SnackBar(
+        content: Text('Đã sao chép: ${state.orderID.value}'),
+        duration: Duration(seconds: 1),
+      ),
     );
   }
 
@@ -171,15 +177,15 @@ class OrderDetailLogic extends GetxController {
           final completer = Completer<void>();
 
           imageProvider.resolve(ImageConfiguration()).addListener(
-            ImageStreamListener(
+                ImageStreamListener(
                   (imageInfo, _) => completer.complete(),
-              onError: (error, stackTrace) {
-                print(
-                    "⚠️ Lỗi tải ảnh: $error"); // In lỗi nếu ảnh tải thất bại
-                completer.complete();
-              },
-            ),
-          );
+                  onError: (error, stackTrace) {
+                    print(
+                        "⚠️ Lỗi tải ảnh: $error"); // In lỗi nếu ảnh tải thất bại
+                    completer.complete();
+                  },
+                ),
+              );
 
           await completer.future;
         }));
@@ -203,5 +209,13 @@ class OrderDetailLogic extends GetxController {
   void onReady() {
     super.onReady();
     update(); // Cập nhật UI ngay sau khi controller sẵn sàng
+  }
+
+  void toggleShowDetail1() {
+    state.showDetail1.value = !state.showDetail1.value;
+  }
+
+  void toggleShowDetail2() {
+    state.showDetail2.value = !state.showDetail2.value;
   }
 }

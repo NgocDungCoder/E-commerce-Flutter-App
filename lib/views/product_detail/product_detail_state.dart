@@ -10,6 +10,7 @@ class ProductDetailState {
   var isLoading = false.obs; // Đang tải dữ liệu (cho refresh, load thêm)
   var isInitialLoading = true.obs; // Đang tải dữ liệu lần đầu
   var currentPage = 1.obs; // Trang hiện tại
+  var isSearching = false.obs;
   var itemsPerPage = 8.obs; // Số sản phẩm trên mỗi trang
   List<Map<String, dynamic>> shippingOptions = [
     {'title': 'Free Flat Rate Shipping', 'icon': Icons.local_shipping_outlined,'date': '09/11/2021 - 12/11/2021', 'content': 'There are many variations of passages of Lorem Ipsum available'},

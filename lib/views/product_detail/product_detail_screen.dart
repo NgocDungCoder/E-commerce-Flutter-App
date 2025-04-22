@@ -205,30 +205,34 @@ class ProductDetailScreen extends StatelessWidget {
                                                             FontWeight.w500,
                                                         fontSize: 18,
                                                       ),
-                                                      logic.state.isDropdownOpenList[
-                                                              index]
-                                                          ? Container(
-                                                              child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  PrimaryText(
-                                                                    logic.state.shippingOptions[index]
-                                                                            [
-                                                                            'content'] ??
-                                                                        '',
-                                                                    softWrap:
-                                                                        true,
+                                                      AnimatedSize(
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  300),
+                                                          curve: Curves
+                                                              .fastOutSlowIn,
+                                                          child: logic.state
+                                                                      .isDropdownOpenList[
+                                                                  index]
+                                                              ? Container(
+                                                                  child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      PrimaryText(
+                                                                        logic.state.shippingOptions[index]['content'] ??
+                                                                            '',
+                                                                        softWrap:
+                                                                            true,
+                                                                      ),
+                                                                      PrimaryText(
+                                                                          logic.state.shippingOptions[index]['date'] ??
+                                                                              ''),
+                                                                    ],
                                                                   ),
-                                                                  PrimaryText(logic
-                                                                          .state
-                                                                          .shippingOptions[index]['date'] ??
-                                                                      ''),
-                                                                ],
-                                                              ),
-                                                            )
-                                                          : SizedBox(),
+                                                                )
+                                                              : SizedBox()),
                                                     ],
                                                   ),
                                                 ),

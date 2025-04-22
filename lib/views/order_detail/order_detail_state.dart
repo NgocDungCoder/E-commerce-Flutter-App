@@ -7,5 +7,7 @@ class OrderDetailState {
   var productsDetail = <dynamic>[].obs; //chi tiết các sản phẩm lấy từ id
   var products = <dynamic>[].obs; // Danh sách sản phẩm you also like,
   RxDouble subToTal = 0.0.obs;
-
+  RxDouble discount = 0.0.obs;
+  var showDetail1 = false.obs;
+  var showDetail2 = false.obs;
 }

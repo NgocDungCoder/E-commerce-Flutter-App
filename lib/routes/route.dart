@@ -16,6 +16,7 @@ import 'package:ecomercy_app_flutter/views/product_detail/product_detail_screen.
 import 'package:ecomercy_app_flutter/views/products/products_screen.dart';
 import 'package:ecomercy_app_flutter/views/setting/setting_view.dart';
 import 'package:ecomercy_app_flutter/views/splash/splash_screen.dart';
+import 'package:ecomercy_app_flutter/views/voucher/voucher_logic.dart';
 import 'package:get/get.dart';
 import '../views/address/add_address/add_address_view.dart';
 import '../views/address/edit_address/edit_address_view.dart';
@@ -30,6 +31,7 @@ import '../views/order_detail/order_detail_view.dart';
 import '../views/order_detail/success_payment_view.dart';
 import '../views/register/register_view.dart';
 import '../views/products/product_binding.dart';
+import '../views/voucher/voucher_view.dart';
 
 class RoutePath {
   final String singlePath;
@@ -93,6 +95,7 @@ abstract class Routes {
   static const editFieldProfile = RoutePath('/editFieldProfile');
   static const chat = RoutePath('/chat');
   static const infor = RoutePath('/infor');
+  static const voucher = RoutePath('/voucher');
 }
 
 final List<GetPage> getPages = [
@@ -225,6 +228,11 @@ final List<GetPage> getPages = [
     name: Routes.main.sp,
     page: () => MainView(),
     binding: MainBinding(),
+  ),
+  GetPage(
+    name: Routes.voucher.sp,
+    page: () => VoucherView(),
+    binding: VoucherBinding(),
   ),
   GetPage(
     name: Routes.otp.sp,

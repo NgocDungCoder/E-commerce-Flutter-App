@@ -268,7 +268,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get shippingFee => 'Tổng tiền phí vận chuyển';
 
   @override
-  String get shippingDiscount => 'Giảm giá phí vận chuyển';
+  String get shippingDiscount => 'Giảm giá voucher';
 
   @override
   String get totalPayment => 'Tổng thanh toán';

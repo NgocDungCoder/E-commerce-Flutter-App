@@ -55,8 +55,6 @@ class ProductDetailLogic extends GetxController {
             );
         state.product.clear();
         state.product.addAll(newProducts);
-        print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-        print(state.product);
       }
     } catch (e) {
       print('Lỗi khi lấy dữ liệu: $e');

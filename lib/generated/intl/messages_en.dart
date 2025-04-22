@@ -144,7 +144,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "shipping": MessageLookupByLibrary.simpleMessage("Shipping"),
     "shippingAddress": MessageLookupByLibrary.simpleMessage("Shipping address"),
     "shippingDiscount": MessageLookupByLibrary.simpleMessage(
-      "Shipping discount",
+      "Voucher discount",
     ),
     "shippingFee": MessageLookupByLibrary.simpleMessage("Shipping fee total"),
     "shippingInfo": MessageLookupByLibrary.simpleMessage(

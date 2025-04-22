@@ -68,6 +68,8 @@ dependencies:
   image_cropper: ^9.1.0
   dash_chat_2: ^0.0.21
   chat_gpt_sdk: ^2.2.5
+  package_info_plus: ^8.3.0
+  diacritic: ^0.1.6
 
 
 

@@ -18,7 +18,8 @@ class ProductItem extends StatelessWidget {
             BorderRadius.circular(15),
             color: Theme.of(context)
                 .colorScheme
-                .primary,
+                .surface
+            ,
             border: Border.all(
                 color: Theme.of(context)
                     .colorScheme

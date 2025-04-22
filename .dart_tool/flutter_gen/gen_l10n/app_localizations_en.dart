@@ -268,7 +268,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shippingFee => 'Shipping fee total';
 
   @override
-  String get shippingDiscount => 'Shipping discount';
+  String get shippingDiscount => 'Voucher discount';
 
   @override
   String get totalPayment => 'Total payment';
